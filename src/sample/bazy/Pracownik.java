@@ -4,14 +4,16 @@ import java.sql.Date;
 
 public class Pracownik {
     int id_pracownika;
+    int id_stanowiska;
     String nazwisko;
     String imie;
     Date data_zatrudnienia;
     Date data_zwolnienia;
     Float wynagrodzenie;
 
-    public Pracownik(int id_pracownika, String nazwisko, String imie, Date data_zatrudnienia, Date data_zwolnienia, Float wynagrodzenie) {
+    public Pracownik(int id_pracownika, int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Date data_zwolnienia, Float wynagrodzenie) {
         this.id_pracownika = id_pracownika;
+        this.id_stanowiska = id_stanowiska;
         this.nazwisko = nazwisko;
         this.imie = imie;
         this.data_zatrudnienia = data_zatrudnienia;
@@ -25,6 +27,14 @@ public class Pracownik {
 
     public void setId_pracownika(int id_pracownika) {
         this.id_pracownika = id_pracownika;
+    }
+
+    public int getId_stanowiska() {
+        return id_stanowiska;
+    }
+
+    public void setId_stanowiska(int id_stanowiska) {
+        this.id_stanowiska = id_stanowiska;
     }
 
     public String getNazwisko() {

@@ -1,6 +1,5 @@
 package sample;
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.bazy.*;
@@ -49,8 +48,9 @@ public class DbAccess {
         ResultSet result = statement.executeQuery("SELECT * FROM pracownik");
 
         while (result.next()) {
-            lista_pracownikow.add(new Pracownik(result.getInt(1), result.getString(2), result.getString(3),
-                    result.getDate(4), result.getDate(5), result.getFloat(6)));
+            lista_pracownikow.add(new Pracownik(result.getInt(1), result.getInt(2),
+                    result.getString(3), result.getString(4),
+                    result.getDate(5), result.getDate(6), result.getFloat(7)));
         }
         return lista_pracownikow;
     }
@@ -92,8 +92,7 @@ public class DbAccess {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         DbAccess bbb = new DbAccess("jdbc:mysql://localhost:3306/projekt", "root",
                 "", Class.forName("com.mysql.cj.jdbc.Driver"));
-        //bbb.test();
-        ObservableList<Klient> cos= bbb.loadKlient();
+        bbb.loadPracownik();
     }
 
 }
