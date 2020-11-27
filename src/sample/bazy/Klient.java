@@ -1,15 +1,15 @@
 package sample.bazy;
 
 public class Klient {
-    int idklienta;
+    int id_klienta;
     String nazwisko;
     String imie;
     String nazwa_firmy;
     String miasto;
     String ulica_nr_domu;
 
-    public Klient(int idklienta, String nazwisko, String imie, String nazwa_firmy, String miasto, String ulica_nr_domu) {
-        this.idklienta = idklienta;
+    public Klient(int id_klienta, String nazwisko, String imie, String nazwa_firmy, String miasto, String ulica_nr_domu) {
+        this.id_klienta = id_klienta;
         this.nazwisko = nazwisko;
         this.imie = imie;
         this.nazwa_firmy = nazwa_firmy;
@@ -17,12 +17,12 @@ public class Klient {
         this.ulica_nr_domu = ulica_nr_domu;
     }
 
-    public int getIdklienta() {
-        return idklienta;
+    public int getId_klienta() {
+        return id_klienta;
     }
 
-    public void setIdklienta(int idklienta) {
-        this.idklienta = idklienta;
+    public void setId_klienta(int id_klienta) {
+        this.id_klienta = id_klienta;
     }
 
     public String getNazwisko() {
@@ -68,7 +68,7 @@ public class Klient {
     @Override
     public String toString() {
         return "Klient{" +
-                "idklienta=" + idklienta +
+                "idklienta=" + id_klienta +
                 ", nazwisko='" + nazwisko + '\'' +
                 ", imie='" + imie + '\'' +
                 ", nazwa_firmy='" + nazwa_firmy + '\'' +

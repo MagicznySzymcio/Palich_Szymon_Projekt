@@ -24,6 +24,15 @@ public class DbAccess {
         this.statement = connection.createStatement();
     }
 
+    public DbAccess() throws SQLException, ClassNotFoundException {
+        this.url = "jdbc:mysql://localhost:3306/projekt";
+        this.user = "root";
+        this.pass = "";
+        this.driver = Class.forName("com.mysql.cj.jdbc.Driver");
+        this.connection = DriverManager.getConnection(url, user, pass);
+        this.statement = connection.createStatement();
+    }
+
     public ObservableList<Klient> loadKlient() throws SQLException {
         ObservableList<Klient> lista_klientow = FXCollections.observableArrayList();
         ResultSet result = statement.executeQuery("SELECT * FROM klient");
@@ -84,7 +93,7 @@ public class DbAccess {
         DbAccess bbb = new DbAccess("jdbc:mysql://localhost:3306/projekt", "root",
                 "", Class.forName("com.mysql.cj.jdbc.Driver"));
         //bbb.test();
-        bbb.loadKlient();
+        ObservableList<Klient> cos= bbb.loadKlient();
     }
 
 }
