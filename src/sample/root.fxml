@@ -14,6 +14,9 @@
      <items>
        <MenuItem mnemonicParsing="false" onAction="#menuSetKlienci" text="Klienci" />
        <MenuItem mnemonicParsing="false" onAction="#menuSetPracownicy" text="Pracownicy" />
+       <MenuItem mnemonicParsing="false" onAction="#menuSetStanowiska" text="Stanowisko" />
+       <MenuItem mnemonicParsing="false" onAction="#menuSetUslugi" text="Usluga" />
+       <MenuItem mnemonicParsing="false" onAction="#menuSetZamowienia" text="Zamowienia" />
      </items>
    </MenuButton>
    <Label layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="104.0" text="Aktualna tabela:">
@@ -21,5 +24,9 @@
          <Font size="14.0" />
       </font>
    </Label>
-   <Button layoutX="14.0" layoutY="104.0" mnemonicParsing="false" onAction="#menuSetKlienci" text="Button" />
+   <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" prefWidth="180.0" text=" Dodaj Klienta" />
+   <Button layoutX="20.0" layoutY="185.0" mnemonicParsing="false" prefWidth="180.0" text="Dodaj Pracownika" />
+   <Button layoutX="20.0" layoutY="220.0" mnemonicParsing="false" onAction="#openDialog" prefWidth="180.0" text="Dodaj Usługę" />
+   <Button layoutX="20.0" layoutY="255.0" mnemonicParsing="false" prefWidth="180.0" text="Dodaj Stanowisko " />
+   <Button styleClass="zam_button" layoutX="20.0" layoutY="290.0" mnemonicParsing="false" prefWidth="180.0" stylesheets="@style.css" text="Dodaj Zamówienie" />
 </Pane>

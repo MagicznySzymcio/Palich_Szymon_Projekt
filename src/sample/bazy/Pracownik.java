@@ -1,5 +1,7 @@
 package sample.bazy;
 
+import javafx.scene.control.Button;
+
 import java.sql.Date;
 
 public class Pracownik {
@@ -10,6 +12,7 @@ public class Pracownik {
     Date data_zatrudnienia;
     Date data_zwolnienia;
     Float wynagrodzenie;
+    private Button edit;
 
     public Pracownik(int id_pracownika, int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Date data_zwolnienia, Float wynagrodzenie) {
         this.id_pracownika = id_pracownika;
@@ -19,6 +22,8 @@ public class Pracownik {
         this.data_zatrudnienia = data_zatrudnienia;
         this.data_zwolnienia = data_zwolnienia;
         this.wynagrodzenie = wynagrodzenie;
+        this.edit = new Button();
+        this.edit.getStyleClass().add("edit_button");
     }
 
     public int getId_pracownika() {
@@ -75,6 +80,14 @@ public class Pracownik {
 
     public void setWynagrodzenie(Float wynagrodzenie) {
         this.wynagrodzenie = wynagrodzenie;
+    }
+
+    public Button getEdit() {
+        return edit;
+    }
+
+    public void setEdit(Button edit) {
+        this.edit = edit;
     }
 
     @Override

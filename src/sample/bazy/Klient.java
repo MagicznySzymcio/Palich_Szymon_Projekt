@@ -1,5 +1,7 @@
 package sample.bazy;
 
+import javafx.scene.control.Button;
+
 public class Klient {
     int id_klienta;
     String nazwisko;
@@ -7,6 +9,8 @@ public class Klient {
     String nazwa_firmy;
     String miasto;
     String ulica_nr_domu;
+    private Button delete;
+    private Button edit;
 
     public Klient(int id_klienta, String nazwisko, String imie, String nazwa_firmy, String miasto, String ulica_nr_domu) {
         this.id_klienta = id_klienta;
@@ -15,6 +19,10 @@ public class Klient {
         this.nazwa_firmy = nazwa_firmy;
         this.miasto = miasto;
         this.ulica_nr_domu = ulica_nr_domu;
+        this.delete = new Button();
+        this.delete.getStyleClass().add("remove_button");
+        this.edit = new Button();
+        this.edit.getStyleClass().add("edit_button");
     }
 
     public int getId_klienta() {
@@ -63,6 +71,22 @@ public class Klient {
 
     public void setUlica_nr_domu(String ulica_nr_domu) {
         this.ulica_nr_domu = ulica_nr_domu;
+    }
+
+    public Button getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Button delete) {
+        this.delete = delete;
+    }
+
+    public Button getEdit() {
+        return edit;
+    }
+
+    public void setEdit(Button edit) {
+        this.edit = edit;
     }
 
     @Override

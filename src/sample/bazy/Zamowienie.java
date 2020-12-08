@@ -1,5 +1,7 @@
 package sample.bazy;
 
+import javafx.scene.control.Button;
+
 import java.util.Date;
 
 public class Zamowienie {
@@ -10,6 +12,8 @@ public class Zamowienie {
     Date data_zamowienia;
     Date data_realizacji;
     int zrealizowano;
+    private Button delete;
+    private Button edit;
 
     public Zamowienie(int id_zamowienia, int id_pracownika, int id_klienta, int id_uslugi, Date data_zamowienia, Date data_realizacji, int zrealizowano) {
         this.id_zamowienia = id_zamowienia;
@@ -19,6 +23,10 @@ public class Zamowienie {
         this.data_zamowienia = data_zamowienia;
         this.data_realizacji = data_realizacji;
         this.zrealizowano = zrealizowano;
+        this.delete = new Button();
+        this.delete.getStyleClass().add("remove_button");
+        this.edit = new Button();
+        this.edit.getStyleClass().add("edit_button");
     }
 
     public int getId_zamowienia() {
@@ -75,5 +83,21 @@ public class Zamowienie {
 
     public void setZrealizowano(int zrealizowano) {
         this.zrealizowano = zrealizowano;
+    }
+
+    public Button getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Button delete) {
+        this.delete = delete;
+    }
+
+    public Button getEdit() {
+        return edit;
+    }
+
+    public void setEdit(Button edit) {
+        this.edit = edit;
     }
 }

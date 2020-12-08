@@ -1,12 +1,17 @@
 package sample.bazy;
 
+import javafx.scene.control.Button;
+
 public class Stanowisko {
     int id_stanowiska;
     String nazwa;
+    private Button edit;
 
     public Stanowisko(int id_stanowiska, String nazwa) {
         this.id_stanowiska = id_stanowiska;
         this.nazwa = nazwa;
+        this.edit = new Button();
+        this.edit.getStyleClass().add("edit_button");
     }
 
     public int getId_stanowiska() {
@@ -23,6 +28,14 @@ public class Stanowisko {
 
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
+    }
+
+    public Button getEdit() {
+        return edit;
+    }
+
+    public void setEdit(Button edit) {
+        this.edit = edit;
     }
 
     @Override

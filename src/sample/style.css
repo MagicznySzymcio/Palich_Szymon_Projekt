@@ -1,0 +1,23 @@
+.edit_button {
+    -fx-graphic: url("edit.png");
+    -fx-background-color: cornflowerblue;
+    -fx-background-radius:0;
+    -fx-pref-width: 50px;
+}
+.remove_button {
+    -fx-graphic: url("remove.png");
+    -fx-background-color: red;
+    -fx-background-radius:0;
+    -fx-pref-width: 50px;
+}
+
+.table-cell{
+    -fx-alignment: center-left;
+}
+
+.zam_button {
+    -fx-font-style: oblique;
+    -fx-background-radius:0;
+    -fx-border-style: solid;
+    -fx-border-color: dodgerblue;
+}

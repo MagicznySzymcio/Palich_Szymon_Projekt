@@ -88,6 +88,12 @@ public class DbAccess {
         return lista_zamowien;
     }
 
+    public void add(String nazwa, float cena) throws SQLException   {
+        String sql = "INSERT INTO `usluga` VALUES (NULL, '" + nazwa + "', '" + cena + "')";
+        statement.executeUpdate(sql);
+
+    }
+
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         DbAccess bbb = new DbAccess("jdbc:mysql://localhost:3306/projekt", "root",

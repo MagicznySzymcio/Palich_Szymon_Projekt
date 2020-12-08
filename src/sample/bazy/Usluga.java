@@ -1,14 +1,27 @@
 package sample.bazy;
 
+import javafx.scene.control.Button;
+
 public class Usluga {
     int id_uslugi;
     String nazwa;
     float cena;
+    private Button edit;
 
     public Usluga(int id_uslugi, String nazwa, float cena) {
         this.id_uslugi = id_uslugi;
         this.nazwa = nazwa;
         this.cena = cena;
+        this.edit = new Button();
+        this.edit.getStyleClass().add("edit_button");
+    }
+
+    public Button getEdit() {
+        return edit;
+    }
+
+    public void setEdit(Button edit) {
+        this.edit = edit;
     }
 
     public int getId_uslugi() {
