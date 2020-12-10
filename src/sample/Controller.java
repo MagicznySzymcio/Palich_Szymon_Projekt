@@ -96,7 +96,6 @@ public class Controller implements Initializable {
 
     @FXML
     public void openDialog() throws IOException {
-
         Parent root = FXMLLoader.load(getClass().getResource("edit.fxml"));
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);

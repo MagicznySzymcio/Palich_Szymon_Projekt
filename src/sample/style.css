@@ -4,6 +4,7 @@
     -fx-background-radius:0;
     -fx-pref-width: 50px;
 }
+
 .remove_button {
     -fx-graphic: url("remove.png");
     -fx-background-color: red;
@@ -20,4 +21,16 @@
     -fx-background-radius:0;
     -fx-border-style: solid;
     -fx-border-color: dodgerblue;
+}
+
+.acc_button {
+    -fx-background-radius:0;
+    -fx-border-style: solid;
+    -fx-border-color: forestgreen;
+}
+
+.can_button {
+    -fx-background-radius:0;
+    -fx-border-style: solid;
+    -fx-border-color: mediumvioletred;
 }

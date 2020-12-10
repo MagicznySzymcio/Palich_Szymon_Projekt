@@ -1,7 +1,10 @@
 package sample.bazy;
 
 import javafx.scene.control.Button;
+import sample.Controller;
+import sample.Main;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Zamowienie {
@@ -25,6 +28,15 @@ public class Zamowienie {
         this.zrealizowano = zrealizowano;
         this.delete = new Button();
         this.delete.getStyleClass().add("remove_button");
+        this.delete.setOnAction(
+                e -> {
+                    try {
+                        Main.test.removeZamowienie(this.id_zamowienia);
+                        Controller.getInstance().menuSetZamowienia();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                });
         this.edit = new Button();
         this.edit.getStyleClass().add("edit_button");
     }

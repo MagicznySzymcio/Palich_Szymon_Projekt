@@ -13,6 +13,18 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EditController implements Initializable {
+    private static EditController instance;
+
+    public EditController() throws SQLException, ClassNotFoundException {
+        instance = this;
+    }
+
+    public static EditController getInstance()
+    {
+        return instance;
+    }
+
+    
     public Controller prev = Controller.getInstance();
     public DbAccess tescik = new DbAccess();
 
@@ -24,16 +36,15 @@ public class EditController implements Initializable {
     @FXML
     private Button accept_button;
 
-    public EditController() throws SQLException, ClassNotFoundException {
-    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        uslugaInit();
+        uslugaAddInit(0);
     }
 
     @FXML
-    public void uslugaInit()    {
+    public void uslugaAddInit(int id)    {
         Label nazwa = new Label("Nazwa");
         Label cena = new Label("Cena");
         TextField nazwa_text = new TextField();
@@ -43,7 +54,6 @@ public class EditController implements Initializable {
         grid_pane.add(nazwa_text, 1, 0);
         grid_pane.add(cena_text, 1, 1);
         accept_button.setOnAction(e -> {
-            add(nazwa_text.getText(), cena_text.getText());
             try {
                 tescik.add(nazwa_text.getText(), Float.parseFloat(cena_text.getText()));
                 prev.menuSetUslugi();
@@ -55,8 +65,26 @@ public class EditController implements Initializable {
     }
 
     @FXML
-    public void add(String nazwa, String cena) {
-        System.out.println(nazwa + cena);
+    public void uslugaEditInit(int id)    {
+        Label nazwa = new Label("Nazwa");
+        Label cena = new Label("Cena");
+        TextField nazwa_text = new TextField();
+        TextField cena_text = new TextField();
+        nazwa_text.setText("dadads");
+        cena_text.setText("14.22");
+        grid_pane.add(nazwa, 0, 0);
+        grid_pane.add(cena, 0, 1);
+        grid_pane.add(nazwa_text, 1, 0);
+        grid_pane.add(cena_text, 1, 1);
+        accept_button.setOnAction(e -> {
+            try {
+                tescik.update(id, nazwa_text.getText(), Float.parseFloat(cena_text.getText()));
+                prev.menuSetUslugi();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            close();
+        });
     }
 
     @FXML

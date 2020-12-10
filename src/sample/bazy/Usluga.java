@@ -1,6 +1,13 @@
 package sample.bazy;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import sample.Controller;
+import sample.EditController;
+import sample.Main;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class Usluga {
     int id_uslugi;
@@ -14,6 +21,14 @@ public class Usluga {
         this.cena = cena;
         this.edit = new Button();
         this.edit.getStyleClass().add("edit_button");
+        this.edit.setOnAction(e -> {
+            try {
+                Controller.getInstance().openDialog();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            EditController.getInstance().uslugaEditInit(this.id_uslugi);
+                });
     }
 
     public Button getEdit() {
