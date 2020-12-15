@@ -32,6 +32,7 @@ public class DbAccess {
         this.statement = connection.createStatement();
     }
 
+
     public ObservableList<Klient> loadKlient() throws SQLException {
         ObservableList<Klient> lista_klientow = FXCollections.observableArrayList();
         ResultSet result = statement.executeQuery("SELECT * FROM klient");
@@ -94,13 +95,31 @@ public class DbAccess {
         statement.executeUpdate(sql);
     }
 
+    public void update(int id, String nazwisko, String imie, String nazwa_firmy, String miasto, String ulica_nr_domu) throws SQLException   {
+        String sql = "UPDATE `klient` SET `nazwisko` = '" + nazwisko + "', `imie` = '" + imie + "', `nazwa_firmy` = '" +
+                nazwa_firmy +"', `miasto` = '" + miasto + "', `ulica_nr_domu` = '" + ulica_nr_domu + "' WHERE `klient`.`id_klienta` = " + id;
+        statement.executeUpdate(sql);
+    }
+
     public void add(int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Date data_zwolnienia, Float wynagrodzenie) throws SQLException   {
         String sql = "INSERT INTO `pracownik` VALUES (NULL, '" + id_stanowiska + "', '" + nazwisko +  "', '" + imie +  "', '" + data_zatrudnienia +  "', '" + data_zwolnienia +"', '" + wynagrodzenie +"')";
         statement.executeUpdate(sql);
     }
 
+    public void update(int id, int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Date data_zwolnienia, Float wynagrodzenie) throws SQLException   {
+        String sql = "UPDATE `pracownik` SET `id_stanowiska` = '" + id_stanowiska + "', `nazwisko` = '" + nazwisko +
+                "', `imie` = '" + imie + "', `data_zatrudnienia` = '" + data_zatrudnienia + "', `data_zwolnienia` = '" + data_zwolnienia +
+                "', `wynagrodzenie` = '" + wynagrodzenie +"' WHERE `pracownik`.`id_pracownika` = " + id;
+        statement.executeUpdate(sql);
+    }
+
     public void add(String nazwa) throws SQLException   {
         String sql = "INSERT INTO `stanowisko` VALUES (NULL, '" + nazwa + "')";
+        statement.executeUpdate(sql);
+    }
+
+    public void update(int id, String nazwa) throws SQLException   {
+        String sql = "UPDATE `stanowisko` SET `id_stanowiska` = '" + nazwa + "' WHERE `stanowisko`.`id_stanowiska` = " + id;
         statement.executeUpdate(sql);
     }
 
@@ -120,6 +139,14 @@ public class DbAccess {
         statement.executeUpdate(sql);
     }
 
+    public void update(int id, int id_klienta, int id_pracownika, int id_uslugi, Date data_zamowienia, Date data_realizacji, int zrealizowano) throws SQLException {
+        String sql = "UPDATE `zamowienie` SET `id_klienta` = '" + id_klienta + "', `id_pracownika` = '" + id_pracownika +
+                "', `id_usługi` = '" + id_uslugi + "', `data_zamowienia` = '" + data_zamowienia + "', `data_realizacji` = '" + data_realizacji +
+                "', `zrealizowano` = '" + zrealizowano + "' WHERE `zamowienie`.`id_zamowienia` = " + id;
+        statement.executeUpdate(sql);
+    }
+
+
     public void removeKlient(int id) throws SQLException {
         String sql = "DELETE FROM `klient` WHERE `klient`.`id_klienta` = " + id;
         statement.executeUpdate(sql);
@@ -129,13 +156,4 @@ public class DbAccess {
         String sql = "DELETE FROM `zamowienie` WHERE `zamowienie`.`id_zamowienia` = " + id;
         statement.executeUpdate(sql);
     }
-
-
-
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        DbAccess bbb = new DbAccess("jdbc:mysql://localhost:3306/projekt", "root",
-                "", Class.forName("com.mysql.cj.jdbc.Driver"));
-        bbb.loadPracownik();
-    }
-
 }

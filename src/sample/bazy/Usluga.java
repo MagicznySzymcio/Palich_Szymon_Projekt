@@ -1,13 +1,10 @@
 package sample.bazy;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import sample.Controller;
 import sample.EditController;
-import sample.Main;
-
 import java.io.IOException;
-import java.sql.SQLException;
+
 
 public class Usluga {
     int id_uslugi;
@@ -27,7 +24,7 @@ public class Usluga {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            EditController.getInstance().uslugaEditInit(this.id_uslugi);
+            EditController.getInstance().uslugaEditInit(this.id_uslugi, this.nazwa, this.cena);
                 });
     }
 

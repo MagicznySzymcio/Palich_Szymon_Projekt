@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-
+    public int sett;
     private static Controller instance;
 
     public Controller() {
@@ -31,7 +31,6 @@ public class Controller implements Initializable {
     {
         return instance;
     }
-
 
     @FXML
     public MenuButton menu;
@@ -96,6 +95,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void openDialog() throws IOException {
+        sett = 1;
         Parent root = FXMLLoader.load(getClass().getResource("edit.fxml"));
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
