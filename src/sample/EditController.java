@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class EditController implements Initializable {
     private final int LIMIT = 20;
-    public int first_id_value;
+    public int first_id_value = -1;
     private static EditController instance;
 
     public EditController() throws SQLException, ClassNotFoundException {
@@ -57,21 +57,9 @@ public class EditController implements Initializable {
     private Button accept_button;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        switch (Controller.getInstance().sett)   {
-            case 0:
-                uslugaAddInit();
-                break;
-            case 1:
-                try {
-                    pracownikAddInit();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-                break;
-        }
+
     }
 
     @FXML
@@ -146,7 +134,7 @@ public class EditController implements Initializable {
 
         accept_button.setOnAction(e -> {
             try {
-                if (checkString(nazwisko_control.getText()) && checkString(imie_control.getText()) && checkFloat(wynagrodzenie_control.getText())) {
+                if (checkString(nazwisko_control.getText()) && checkString(imie_control.getText()) && checkFloat(wynagrodzenie_control.getText()) && first_id_value != -1) {
                     tescik.add(first_id_value, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
                             Date.valueOf(data_zwol_control.getValue()), Float.parseFloat(wynagrodzenie_control.getText()));
                     prev.menuSetPracownicy();

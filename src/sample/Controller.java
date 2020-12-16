@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    public int sett;
+    public int dialog_type;
     private static Controller instance;
 
     public Controller() {
@@ -95,12 +95,23 @@ public class Controller implements Initializable {
 
     @FXML
     public void openDialog() throws IOException {
-        sett = 1;
         Parent root = FXMLLoader.load(getClass().getResource("edit.fxml"));
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(Main.STAGE);
         dialog.setScene(new Scene(root, 600, 400));
         dialog.show();
+    }
+
+    @FXML
+    public void pracownikDialog() throws IOException, SQLException {
+        openDialog();
+        EditController.getInstance().pracownikAddInit();
+    }
+
+    @FXML
+    public void uslugaDialog() throws IOException, SQLException {
+        openDialog();
+        EditController.getInstance().uslugaAddInit();
     }
 }

@@ -1,0 +1,65 @@
+.edit_button {
+    -fx-graphic: url("edit.png");
+    -fx-background-color: cornflowerblue;
+    -fx-background-radius:0;
+    -fx-pref-width: 50px;
+}
+
+.remove_button {
+    -fx-graphic: url("remove.png");
+    -fx-background-color: red;
+    -fx-background-radius:0;
+    -fx-pref-width: 50px;
+}
+
+.table-cell{
+    -fx-alignment: center-left;
+}
+
+.zam_button {
+    -fx-font-style: oblique;
+    -fx-background-radius:0;
+    -fx-border-style: solid;
+    -fx-border-color: dodgerblue;
+}
+
+.acc_button {
+    -fx-background-radius:0;
+    -fx-border-style: solid;
+    -fx-border-color: forestgreen;
+}
+
+.can_button {
+    -fx-background-radius:0;
+    -fx-border-style: solid;
+    -fx-border-color: mediumvioletred;
+}
+
+.menu_button {
+    -fx-background-radius: 0;
+    -fx-background-color: white;
+    -fx-border-color: cornflowerblue;
+}
+
+.menu-button {
+    -fx-pref-width: 270px;
+    -fx-background-radius: 0;
+    -fx-background-color: white;
+    -fx-border-color: cornflowerblue;
+}
+
+.menu-button.menu_button {
+    -fx-pref-width: 180px;
+}
+
+.menu-item {
+    -fx-pref-width: 268px;
+}
+
+.menu-item.menu_item {
+    -fx-pref-width: 178px;
+}
+
+.date-picker {
+    -fx-pref-width: 270px;
+}
