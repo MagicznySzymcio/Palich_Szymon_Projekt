@@ -1,7 +1,7 @@
 package sample.bazy;
 
 import javafx.scene.control.Button;
-import sample.Controller;
+import sample.fxml.RootController;
 import sample.Main;
 
 import java.sql.SQLException;
@@ -32,7 +32,7 @@ public class Zamowienie {
                 e -> {
                     try {
                         Main.test.removeZamowienie(this.id_zamowienia);
-                        Controller.getInstance().menuSetZamowienia();
+                        RootController.getInstance().menuSetZamowienia();
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }

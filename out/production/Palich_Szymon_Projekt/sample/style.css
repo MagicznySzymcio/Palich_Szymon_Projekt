@@ -1,12 +1,12 @@
 .edit_button {
-    -fx-graphic: url("edit.png");
+    -fx-graphic: url("img/edit.png");
     -fx-background-color: cornflowerblue;
     -fx-background-radius:0;
     -fx-pref-width: 50px;
 }
 
 .remove_button {
-    -fx-graphic: url("remove.png");
+    -fx-graphic: url("img/remove.png");
     -fx-background-color: red;
     -fx-background-radius:0;
     -fx-pref-width: 50px;

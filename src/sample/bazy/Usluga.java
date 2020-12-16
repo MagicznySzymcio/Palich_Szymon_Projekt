@@ -1,8 +1,8 @@
 package sample.bazy;
 
 import javafx.scene.control.Button;
-import sample.Controller;
-import sample.EditController;
+import sample.fxml.RootController;
+import sample.fxml.EditController;
 import java.io.IOException;
 
 
@@ -20,7 +20,7 @@ public class Usluga {
         this.edit.getStyleClass().add("edit_button");
         this.edit.setOnAction(e -> {
             try {
-                Controller.getInstance().openDialog();
+                RootController.getInstance().openDialog();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }

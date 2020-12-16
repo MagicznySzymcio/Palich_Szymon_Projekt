@@ -1,4 +1,4 @@
-package sample;
+package sample.fxml;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import sample.DbAccess;
+import sample.Main;
 import sample.bazy.Stanowisko;
 
 import java.net.URL;
@@ -45,7 +47,7 @@ public class EditController implements Initializable {
         }
     }
     
-    public Controller prev = Controller.getInstance();
+    public RootController prev = RootController.getInstance();
     public DbAccess tescik = new DbAccess();
 
     public AnchorPane alert_box;

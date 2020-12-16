@@ -1,4 +1,4 @@
-package sample;
+package sample.fxml;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,27 +7,27 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.bazy.*;
+import sample.Main;
+import sample.TableView;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class RootController implements Initializable {
     public int dialog_type;
-    private static Controller instance;
+    private static RootController instance;
 
-    public Controller() {
+    public RootController() {
         instance = this;
     }
 
-    public static Controller getInstance()
+    public static RootController getInstance()
     {
         return instance;
     }
@@ -56,7 +56,7 @@ public class Controller implements Initializable {
     @FXML
     public void menuSetKlienci() throws SQLException {
         menu.setText("Klienci");
-        TableView<Klient> table = TableViewT.getTableKlient();
+        javafx.scene.control.TableView table = TableView.getTableKlient();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -64,7 +64,7 @@ public class Controller implements Initializable {
     @FXML
     public void menuSetPracownicy() throws SQLException {
         menu.setText("Pracownicy");
-        TableView<Pracownik> table = TableViewT.getTablePracownik();
+        javafx.scene.control.TableView table = TableView.getTablePracownik();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -72,7 +72,7 @@ public class Controller implements Initializable {
     @FXML
     public void menuSetStanowiska() throws SQLException {
         menu.setText("Stanowiska");
-        TableView<Stanowisko> table = TableViewT.getTableStanowisko();
+        javafx.scene.control.TableView table = TableView.getTableStanowisko();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -80,7 +80,7 @@ public class Controller implements Initializable {
     @FXML
     public void menuSetUslugi() throws SQLException {
         menu.setText("Uslugi");
-        TableView<Usluga> table = TableViewT.getTableUsluga();
+        javafx.scene.control.TableView table = TableView.getTableUsluga();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -88,7 +88,7 @@ public class Controller implements Initializable {
     @FXML
     public void menuSetZamowienia() throws SQLException {
         menu.setText("Zamowienia");
-        TableView<Zamowienie> table = TableViewT.getTableZamowienie();
+        javafx.scene.control.TableView table = TableView.getTableZamowienie();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
