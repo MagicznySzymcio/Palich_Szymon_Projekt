@@ -1,11 +1,13 @@
 package Projekt.bazy;
 
 import Projekt.Main;
+import Projekt.fxml.EditController;
 import Projekt.fxml.RootController;
 import javafx.scene.control.Button;
 
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 public class Zamowienie {
     int id_zamowienia;
@@ -18,7 +20,7 @@ public class Zamowienie {
     private Button delete;
     private Button edit;
 
-    public Zamowienie(int id_zamowienia, int id_pracownika, int id_klienta, int id_uslugi, Date data_zamowienia, Date data_realizacji, int zrealizowano) {
+    public Zamowienie(int id_zamowienia, int id_klienta, int id_pracownika, int id_uslugi, Date data_zamowienia, Date data_realizacji, int zrealizowano) {
         this.id_zamowienia = id_zamowienia;
         this.id_pracownika = id_pracownika;
         this.id_klienta = id_klienta;
@@ -39,6 +41,14 @@ public class Zamowienie {
                 });
         this.edit = new Button();
         this.edit.getStyleClass().add("edit_button");
+        this.edit.setOnAction(e -> {
+            try {
+                RootController.getInstance().openDialog();
+                EditController.getInstance().zamowienieEditInit(this.id_zamowienia, this.id_klienta, this.id_pracownika, this.id_uslugi, this.data_zamowienia, this.data_realizacji, this.zrealizowano);
+              } catch (IOException | SQLException ioException) {
+                ioException.printStackTrace();
+            }
+        });
     }
 
     public int getId_zamowienia() {

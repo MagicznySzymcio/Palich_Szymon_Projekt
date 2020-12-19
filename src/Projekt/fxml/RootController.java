@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -53,7 +54,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetKlienci() throws SQLException {
         menu.setText("Klienci");
-        javafx.scene.control.TableView table = TableCreator.getTableKlient();
+        TableView table = TableCreator.getTableKlient();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -61,7 +62,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetPracownicy() throws SQLException {
         menu.setText("Pracownicy");
-        javafx.scene.control.TableView table = TableCreator.getTablePracownik();
+        TableView table = TableCreator.getTablePracownik();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -69,7 +70,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetStanowiska() throws SQLException {
         menu.setText("Stanowiska");
-        javafx.scene.control.TableView table = TableCreator.getTableStanowisko();
+        TableView table = TableCreator.getTableStanowisko();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -77,7 +78,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetUslugi() throws SQLException {
         menu.setText("Uslugi");
-        javafx.scene.control.TableView table = TableCreator.getTableUsluga();
+        TableView table = TableCreator.getTableUsluga();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -85,7 +86,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetZamowienia() throws SQLException {
         menu.setText("Zamowienia");
-        javafx.scene.control.TableView table = TableCreator.getTableZamowienie();
+        TableView table = TableCreator.getTableZamowienie();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -122,5 +123,11 @@ public class RootController implements Initializable {
     public void stanowiskoDialog() throws IOException {
         openDialog();
         EditController.getInstance().stanowiskoAddInit();
+    }
+
+    @FXML
+    public void zamowienieDialog() throws IOException, SQLException {
+        openDialog();
+        EditController.getInstance().zamowienieAddInit();
     }
 }

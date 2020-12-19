@@ -2,14 +2,14 @@ package Projekt.fxml;
 
 import Projekt.DbAccess;
 import Projekt.Main;
+import Projekt.bazy.Klient;
+import Projekt.bazy.Pracownik;
 import Projekt.bazy.Stanowisko;
+import Projekt.bazy.Usluga;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -22,7 +22,9 @@ import java.util.ResourceBundle;
 
 public class EditController implements Initializable {
     private static EditController instance;
-    public int first_id_value = -1;
+    public int primo = -1;
+    public int secundo = -1;
+    public int terzo = -1;
     public RootController prev = RootController.getInstance();
     public DbAccess tescik = new DbAccess();
     public AnchorPane alert_box;
@@ -163,7 +165,7 @@ public class EditController implements Initializable {
             MenuItem temp = new MenuItem(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
             temp.setOnAction(e -> {
                 id_stan_menu.setText(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
-                first_id_value = stanowisko.getId_stanowiska();
+                primo = stanowisko.getId_stanowiska();
             });
             id_stan_menu.getItems().add(temp);
         }
@@ -202,12 +204,12 @@ public class EditController implements Initializable {
         accept_button.setOnAction(e -> {
             try {
                 if (checkString(nazwisko_control.getText()) && checkString(imie_control.getText()) &&
-                        checkFloat(wynagrodzenie_control.getText()) && first_id_value != -1 && checkDate(data_zatr_control.getValue())) {
+                        checkFloat(wynagrodzenie_control.getText()) && primo != -1 && checkDate(data_zatr_control.getValue())) {
                     if (checkDate(data_zwol_control.getValue()))
-                        tescik.add(first_id_value, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
+                        tescik.add(primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
                                 Date.valueOf(data_zwol_control.getValue()), Float.parseFloat(wynagrodzenie_control.getText()));
                     else
-                        tescik.add(first_id_value, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
+                        tescik.add(primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
                                 Float.parseFloat(wynagrodzenie_control.getText()));
                     prev.menuSetPracownicy();
                     close();
@@ -219,15 +221,20 @@ public class EditController implements Initializable {
 
     @FXML
     public void pracownikEditInit(int id, int id_stanowiska_t, String nazwisko_t, String imie_t, Date data_zatrudnienia_t, Date data_zwolnienia_t, Float wynagrodzenie_t) throws SQLException {
-        ObservableList<Stanowisko> table = Main.test.loadStanowisko();
-        MenuButton id_stan_menu = new MenuButton(id_stanowiska_t + " - " + table.get(id_stanowiska_t-1).getNazwa());
-        first_id_value = id_stanowiska_t;
+        ObservableList<Stanowisko> l_stanowisk = Main.test.loadStanowisko();
+        MenuButton id_stan_menu = new MenuButton(id_stanowiska_t + " - " + l_stanowisk.get(id_stanowiska_t-1).getNazwa());
+        primo = id_stanowiska_t;
 
-        for (Stanowisko stanowisko : table) {
+        for (Stanowisko stanowisko : l_stanowisk) {
+            if (stanowisko.getId_stanowiska() == id)
+                id_stan_menu.setText(id_stanowiska_t + " - " + stanowisko.getNazwa());
+        }
+
+        for (Stanowisko stanowisko : l_stanowisk) {
             MenuItem temp = new MenuItem(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
             temp.setOnAction(e -> {
                 id_stan_menu.setText(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
-                first_id_value = stanowisko.getId_stanowiska();
+                primo = stanowisko.getId_stanowiska();
             });
             id_stan_menu.getItems().add(temp);
         }
@@ -271,12 +278,12 @@ public class EditController implements Initializable {
         accept_button.setOnAction(e -> {
             try {
                 if (checkString(nazwisko_control.getText()) && checkString(imie_control.getText()) &&
-                        checkFloat(wynagrodzenie_control.getText()) && first_id_value != -1 && checkDate(data_zatr_control.getValue())) {
+                        checkFloat(wynagrodzenie_control.getText()) && primo != -1 && checkDate(data_zatr_control.getValue())) {
                     if (checkDate(data_zwol_control.getValue()))
-                        tescik.update(id, first_id_value, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
+                        tescik.update(id, primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
                                 Date.valueOf(data_zwol_control.getValue()), Float.parseFloat(wynagrodzenie_control.getText()));
                     else
-                        tescik.update(id, first_id_value, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
+                        tescik.update(id, primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
                                 Float.parseFloat(wynagrodzenie_control.getText()));
                     prev.menuSetPracownicy();
                     close();
@@ -376,6 +383,189 @@ public class EditController implements Initializable {
             }
         });
     }
+
+    @FXML
+    public void zamowienieAddInit() throws SQLException {
+        ObservableList<Klient> l_klientow = Main.test.loadKlient();
+        ObservableList<Pracownik> l_pracownikow = Main.test.loadPracownik();
+        ObservableList<Usluga> l_uslug = Main.test.loadUsluga();
+
+        MenuButton menu_klient = new MenuButton("Wybierz ID klienta");
+        MenuButton menu_pracownik = new MenuButton("Wybierz ID pracownika");
+        MenuButton menu_usluga = new MenuButton("Wybierz ID usługi");
+
+        for (Klient klient : l_klientow) {
+            MenuItem temp = new MenuItem(klient.getId_klienta() + " - " + klient.getNazwisko());
+            temp.setOnAction(e -> {
+                menu_klient.setText(klient.getId_klienta() + " - " + klient.getNazwisko());
+                primo = klient.getId_klienta();
+            });
+            menu_klient.getItems().add(temp);
+        }
+
+        for (Pracownik pracownik : l_pracownikow) {
+            MenuItem temp = new MenuItem(pracownik.getId_pracownika() + " - " + pracownik.getNazwisko());
+            temp.setOnAction(e -> {
+                menu_pracownik.setText(pracownik.getId_pracownika() + " - " + pracownik.getNazwisko());
+                secundo = pracownik.getId_pracownika();
+            });
+            menu_pracownik.getItems().add(temp);
+        }
+
+        for (Usluga usluga : l_uslug) {
+            MenuItem temp = new MenuItem(usluga.getId_uslugi() + " - " + usluga.getNazwa());
+            temp.setOnAction(e -> {
+                menu_usluga.setText(usluga.getId_uslugi() + " - " + usluga.getNazwa());
+                terzo = usluga.getId_uslugi();
+            });
+            menu_usluga.getItems().add(temp);
+        }
+
+
+        Label id_klienta_label = new Label("ID Klienta");
+        Label id_pracownika_label = new Label("ID Pracownika");
+        Label id_uslugi_label = new Label("ID Usługi");
+        Label data_zamowienia_label = new Label("Data zamówienia");
+        Label data_realizacji_label = new Label("Data realizacji");
+        Label zrealizowano_label = new Label("Zrealizowano");
+
+
+        DatePicker data_zam_control = new DatePicker();
+        data_zam_control.setEditable(false);
+        DatePicker data_real_control = new DatePicker();
+        data_real_control.setEditable(false);
+        CheckBox zrealizowano_control = new CheckBox();
+
+        grid_pane.add(id_klienta_label, 0, 0);
+        grid_pane.add(id_pracownika_label, 0, 1);
+        grid_pane.add(id_uslugi_label, 0, 2);
+        grid_pane.add(data_zamowienia_label, 0, 3);
+        grid_pane.add(data_realizacji_label, 0, 4);
+        grid_pane.add(zrealizowano_label, 0, 5);
+        grid_pane.add(menu_klient, 1, 0);
+        grid_pane.add(menu_pracownik, 1, 1);
+        grid_pane.add(menu_usluga, 1, 2);
+        grid_pane.add(data_zam_control, 1, 3);
+        grid_pane.add(data_real_control, 1, 4);
+        grid_pane.add(zrealizowano_control, 1, 5);
+
+
+        accept_button.setOnAction(e -> {
+            try {
+                if (checkDate(data_real_control.getValue()) && checkDate(data_zam_control.getValue()) && primo != -1 && secundo != -1 && terzo != -1) {
+                    tescik.add(primo, secundo, terzo, Date.valueOf(data_real_control.getValue()),
+                            Date.valueOf(data_zam_control.getValue()), zrealizowano_control.isSelected() ? 1 : 0);
+                    prev.menuSetZamowienia();
+                    close();
+                } else System.out.println("blad");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+    }
+
+    @FXML
+    public void zamowienieEditInit(int id, int id_klienta_t, int id_pracownika_t, int id_uslugi_t, Date data_zamowienia_t, Date data_realizacji_t, int zrealizowano_t) throws SQLException {
+        ObservableList<Klient> l_klientow = Main.test.loadKlient();
+        ObservableList<Pracownik> l_pracownikow = Main.test.loadPracownik();
+        ObservableList<Usluga> l_uslug = Main.test.loadUsluga();
+        MenuButton menu_klient = new MenuButton();
+        MenuButton menu_pracownik = new MenuButton();
+        MenuButton menu_usluga = new MenuButton();
+
+        for (Klient klient : l_klientow) {
+            if (klient.getId_klienta() == id_klienta_t)
+                menu_klient.setText(id_klienta_t + " - " + klient.getNazwisko());
+        }
+
+        for (Pracownik pracownik : l_pracownikow) {
+            if (pracownik.getId_pracownika() == id_pracownika_t)
+                menu_pracownik.setText(id_pracownika_t + " - " + pracownik.getNazwisko());
+        }
+        for (Usluga usluga : l_uslug) {
+            if (usluga.getId_uslugi() == id_uslugi_t)
+                menu_usluga.setText(id_uslugi_t + " - " + usluga.getNazwa());
+        }
+
+
+        primo = id_klienta_t;
+        secundo = id_pracownika_t;
+        terzo = id_uslugi_t;
+
+        for (Klient klient : l_klientow) {
+            MenuItem temp = new MenuItem(klient.getId_klienta() + " - " + klient.getNazwisko());
+            temp.setOnAction(e -> {
+                menu_klient.setText(klient.getId_klienta() + " - " + klient.getNazwisko());
+                primo = klient.getId_klienta();
+            });
+            menu_klient.getItems().add(temp);
+        }
+
+        for (Pracownik pracownik : l_pracownikow) {
+            MenuItem temp = new MenuItem(pracownik.getId_pracownika() + " - " + pracownik.getNazwisko());
+            temp.setOnAction(e -> {
+                menu_pracownik.setText(pracownik.getId_pracownika() + " - " + pracownik.getNazwisko());
+                secundo = pracownik.getId_pracownika();
+            });
+            menu_pracownik.getItems().add(temp);
+        }
+
+        for (Usluga usluga : l_uslug) {
+            MenuItem temp = new MenuItem(usluga.getId_uslugi() + " - " + usluga.getNazwa());
+            temp.setOnAction(e -> {
+                menu_usluga.setText(usluga.getId_uslugi() + " - " + usluga.getNazwa());
+                terzo = usluga.getId_uslugi();
+            });
+            menu_usluga.getItems().add(temp);
+        }
+
+
+        Label id_klienta_label = new Label("ID Klienta");
+        Label id_pracownika_label = new Label("ID Pracownika");
+        Label id_uslugi_label = new Label("ID Usługi");
+        Label data_zamowienia_label = new Label("Data zamówienia");
+        Label data_realizacji_label = new Label("Data realizacji");
+        Label zrealizowano_label = new Label("Zrealizowano");
+
+        DatePicker data_zam_control = new DatePicker();
+        data_zam_control.setEditable(false);
+        DatePicker data_real_control = new DatePicker();
+        data_real_control.setEditable(false);
+        CheckBox zrealizowano_control = new CheckBox();
+
+        data_zam_control.setValue(data_zamowienia_t.toLocalDate());
+        data_real_control.setValue(data_realizacji_t.toLocalDate());
+
+        zrealizowano_control.setSelected(zrealizowano_t == 1);
+
+        grid_pane.add(id_klienta_label, 0, 0);
+        grid_pane.add(id_pracownika_label, 0, 1);
+        grid_pane.add(id_uslugi_label, 0, 2);
+        grid_pane.add(data_zamowienia_label, 0, 3);
+        grid_pane.add(data_realizacji_label, 0, 4);
+        grid_pane.add(zrealizowano_label, 0, 5);
+        grid_pane.add(menu_klient, 1, 0);
+        grid_pane.add(menu_pracownik, 1, 1);
+        grid_pane.add(menu_usluga, 1, 2);
+        grid_pane.add(data_zam_control, 1, 3);
+        grid_pane.add(data_real_control, 1, 4);
+        grid_pane.add(zrealizowano_control, 1, 5);
+
+
+        accept_button.setOnAction(e -> {
+            try {
+                if (checkDate(data_real_control.getValue()) && checkDate(data_zam_control.getValue()) && primo != -1 && secundo != -1 && terzo != -1) {
+                    tescik.update(id, primo, secundo, terzo, Date.valueOf(data_real_control.getValue()),
+                            Date.valueOf(data_zam_control.getValue()), zrealizowano_control.isSelected() ? 1 : 0);
+                    prev.menuSetZamowienia();
+                    close();
+                } else System.out.println("blad");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+    }
+
 
     @FXML
     public void close() {

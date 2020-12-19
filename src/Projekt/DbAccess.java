@@ -165,6 +165,7 @@ public class DbAccess {
         String sql = "UPDATE `zamowienie` SET `id_klienta` = '" + id_klienta + "', `id_pracownika` = '" + id_pracownika +
                 "', `id_usługi` = '" + id_uslugi + "', `data_zamowienia` = '" + data_zamowienia + "', `data_realizacji` = '" + data_realizacji +
                 "', `zrealizowano` = '" + zrealizowano + "' WHERE `zamowienie`.`id_zamowienia` = " + id;
+        System.out.println(sql);
         statement.executeUpdate(sql);
     }
 

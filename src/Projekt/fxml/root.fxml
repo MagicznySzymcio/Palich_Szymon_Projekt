@@ -35,8 +35,8 @@
             text="Dodaj Usługę"/>
     <Button layoutX="20.0" layoutY="255.0" mnemonicParsing="false" prefWidth="180.0" onAction="#stanowiskoDialog"
             text="Dodaj Stanowisko "/>
-    <Button layoutX="20.0" layoutY="290.0" mnemonicParsing="false" prefWidth="180.0" styleClass="zam_button"
-            stylesheets="@../style.css" text="Dodaj Zamówienie"/>
+    <Button layoutX="20.0" layoutY="290.0" mnemonicParsing="false" prefWidth="180.0" onAction="#zamowienieDialog"
+            styleClass="zam_button" stylesheets="@../style.css" text="Dodaj Zamówienie"/>
     <ImageView fitHeight="171.0" fitWidth="180.0" layoutX="18.0" layoutY="535.0" pickOnBounds="true"
                preserveRatio="true">
         <Image url="@../img/padoru.jpg"/>
