@@ -1,13 +1,15 @@
-package sample;
+package Projekt;
 
+import Projekt.bazy.*;
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.bazy.*;
+
 import java.sql.Date;
 import java.sql.SQLException;
 
-public class TableView {
+public class TableCreator {
     private static DbAccess db_access;
 
     static {

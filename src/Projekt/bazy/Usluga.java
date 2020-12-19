@@ -1,8 +1,9 @@
-package sample.bazy;
+package Projekt.bazy;
 
+import Projekt.fxml.EditController;
+import Projekt.fxml.RootController;
 import javafx.scene.control.Button;
-import sample.fxml.RootController;
-import sample.fxml.EditController;
+
 import java.io.IOException;
 
 
@@ -25,7 +26,7 @@ public class Usluga {
                 ioException.printStackTrace();
             }
             EditController.getInstance().uslugaEditInit(this.id_uslugi, this.nazwa, this.cena);
-                });
+        });
     }
 
     public Button getEdit() {
@@ -61,7 +62,7 @@ public class Usluga {
     }
 
     @Override
-    public String   toString() {
+    public String toString() {
         return "Usluga{" +
                 "id_uslugi=" + id_uslugi +
                 ", nazwa='" + nazwa + '\'' +

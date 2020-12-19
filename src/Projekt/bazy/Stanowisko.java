@@ -1,6 +1,10 @@
-package sample.bazy;
+package Projekt.bazy;
 
+import Projekt.fxml.EditController;
+import Projekt.fxml.RootController;
 import javafx.scene.control.Button;
+
+import java.io.IOException;
 
 public class Stanowisko {
     int id_stanowiska;
@@ -12,6 +16,14 @@ public class Stanowisko {
         this.nazwa = nazwa;
         this.edit = new Button();
         this.edit.getStyleClass().add("edit_button");
+        this.edit.setOnAction(e -> {
+            try {
+                RootController.getInstance().openDialog();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            EditController.getInstance().stanowiskoEditInit(this.id_stanowiska, this.nazwa);
+        });
     }
 
     public int getId_stanowiska() {

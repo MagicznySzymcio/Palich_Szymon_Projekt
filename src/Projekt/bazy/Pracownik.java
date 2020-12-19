@@ -1,8 +1,12 @@
-package sample.bazy;
+package Projekt.bazy;
 
+import Projekt.fxml.EditController;
+import Projekt.fxml.RootController;
 import javafx.scene.control.Button;
 
+import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 
 public class Pracownik {
     int id_pracownika;
@@ -24,6 +28,17 @@ public class Pracownik {
         this.wynagrodzenie = wynagrodzenie;
         this.edit = new Button();
         this.edit.getStyleClass().add("edit_button");
+        this.edit.setOnAction(e -> {
+            try {
+                RootController.getInstance().openDialog();
+                if (this.data_zwolnienia == null)
+                    EditController.getInstance().pracownikEditInit(this.id_pracownika, this.id_stanowiska, this.nazwisko, this.imie, this.data_zatrudnienia, Date.valueOf("1899-12-31"), this.wynagrodzenie);
+                else
+                    EditController.getInstance().pracownikEditInit(this.id_pracownika, this.id_stanowiska, this.nazwisko, this.imie, this.data_zatrudnienia, this.data_zwolnienia, this.wynagrodzenie);
+            } catch (IOException | SQLException ioException) {
+                ioException.printStackTrace();
+            }
+        });
     }
 
     public int getId_pracownika() {

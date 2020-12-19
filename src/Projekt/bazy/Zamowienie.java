@@ -1,8 +1,8 @@
-package sample.bazy;
+package Projekt.bazy;
 
+import Projekt.Main;
+import Projekt.fxml.RootController;
 import javafx.scene.control.Button;
-import sample.fxml.RootController;
-import sample.Main;
 
 import java.sql.SQLException;
 import java.util.Date;

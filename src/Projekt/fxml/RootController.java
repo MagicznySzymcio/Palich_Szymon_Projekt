@@ -1,5 +1,7 @@
-package sample.fxml;
+package Projekt.fxml;
 
+import Projekt.Main;
+import Projekt.TableCreator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,8 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.Main;
-import sample.TableView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,23 +20,20 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class RootController implements Initializable {
-    public int dialog_type;
     private static RootController instance;
-
-    public RootController() {
-        instance = this;
-    }
-
-    public static RootController getInstance()
-    {
-        return instance;
-    }
-
+    public int dialog_type;
     @FXML
     public MenuButton menu;
     public AnchorPane alert_box;
     public Button close_button;
     public VBox vbox_tabela;
+    public RootController() {
+        instance = this;
+    }
+
+    public static RootController getInstance() {
+        return instance;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -56,7 +53,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetKlienci() throws SQLException {
         menu.setText("Klienci");
-        javafx.scene.control.TableView table = TableView.getTableKlient();
+        javafx.scene.control.TableView table = TableCreator.getTableKlient();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -64,7 +61,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetPracownicy() throws SQLException {
         menu.setText("Pracownicy");
-        javafx.scene.control.TableView table = TableView.getTablePracownik();
+        javafx.scene.control.TableView table = TableCreator.getTablePracownik();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -72,7 +69,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetStanowiska() throws SQLException {
         menu.setText("Stanowiska");
-        javafx.scene.control.TableView table = TableView.getTableStanowisko();
+        javafx.scene.control.TableView table = TableCreator.getTableStanowisko();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -80,7 +77,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetUslugi() throws SQLException {
         menu.setText("Uslugi");
-        javafx.scene.control.TableView table = TableView.getTableUsluga();
+        javafx.scene.control.TableView table = TableCreator.getTableUsluga();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -88,7 +85,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetZamowienia() throws SQLException {
         menu.setText("Zamowienia");
-        javafx.scene.control.TableView table = TableView.getTableZamowienie();
+        javafx.scene.control.TableView table = TableCreator.getTableZamowienie();
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -110,8 +107,20 @@ public class RootController implements Initializable {
     }
 
     @FXML
-    public void uslugaDialog() throws IOException, SQLException {
+    public void uslugaDialog() throws IOException {
         openDialog();
         EditController.getInstance().uslugaAddInit();
+    }
+
+    @FXML
+    public void klientDialog() throws IOException {
+        openDialog();
+        EditController.getInstance().klientAddInit();
+    }
+
+    @FXML
+    public void stanowiskoDialog() throws IOException {
+        openDialog();
+        EditController.getInstance().stanowiskoAddInit();
     }
 }

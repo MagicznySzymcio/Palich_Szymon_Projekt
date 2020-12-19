@@ -1,6 +1,11 @@
-package sample.bazy;
+package Projekt.bazy;
 
+import Projekt.fxml.EditController;
+import Projekt.fxml.RootController;
 import javafx.scene.control.Button;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class Klient {
     int id_klienta;
@@ -23,6 +28,14 @@ public class Klient {
         this.delete.getStyleClass().add("remove_button");
         this.edit = new Button();
         this.edit.getStyleClass().add("edit_button");
+        this.edit.setOnAction(e -> {
+            try {
+                RootController.getInstance().openDialog();
+                EditController.getInstance().klientEditInit(this.id_klienta, this.nazwisko, this.imie, this.nazwa_firmy, this.miasto, this.ulica_nr_domu);
+            } catch (IOException | SQLException ioException) {
+                ioException.printStackTrace();
+            }
+        });
     }
 
     public int getId_klienta() {

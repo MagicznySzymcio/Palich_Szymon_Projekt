@@ -1,8 +1,8 @@
-package sample;
+package Projekt;
 
+import Projekt.bazy.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sample.bazy.*;
 
 import java.sql.*;
 
@@ -90,52 +90,74 @@ public class DbAccess {
     }
 
 
-    public void add(String nazwisko, String imie, String nazwa_firmy, String miasto, String ulica_nr_domu) throws SQLException   {
-        String sql = "INSERT INTO `klient` VALUES (NULL, '" + nazwisko + "', '" + imie +  "', '" + nazwa_firmy +  "', '" + miasto +  "', '" + ulica_nr_domu +"')";
+    public void add(String nazwisko, String imie, String nazwa_firmy, String miasto, String ulica_nr_domu) throws SQLException {
+        String sql;
+        if (nazwa_firmy.equals(""))
+            sql = "INSERT INTO `klient` VALUES (NULL, '" + nazwisko + "', '" + imie + "', '" + nazwa_firmy + "', '" + miasto + "', '" + ulica_nr_domu + "')";
+        else
+            sql = "INSERT INTO `klient` VALUES (NULL, '" + nazwisko + "', '" + imie + "', " + "NULL" + ", '" + miasto + "', '" + ulica_nr_domu + "')";
         statement.executeUpdate(sql);
     }
 
-    public void update(int id, String nazwisko, String imie, String nazwa_firmy, String miasto, String ulica_nr_domu) throws SQLException   {
-        String sql = "UPDATE `klient` SET `nazwisko` = '" + nazwisko + "', `imie` = '" + imie + "', `nazwa_firmy` = '" +
-                nazwa_firmy +"', `miasto` = '" + miasto + "', `ulica_nr_domu` = '" + ulica_nr_domu + "' WHERE `klient`.`id_klienta` = " + id;
+    public void update(int id, String nazwisko, String imie, String nazwa_firmy, String miasto, String ulica_nr_domu) throws SQLException {
+        String sql;
+        if (nazwa_firmy.equals(""))
+            sql = "UPDATE `klient` SET `nazwisko` = '" + nazwisko + "', `imie` = '" + imie + "', `nazwa_firmy` = " +
+                    "NULL" + ", `miasto` = '" + miasto + "', `ulica_nr_domu` = '" + ulica_nr_domu + "' WHERE `klient`.`id_klienta` = " + id;
+        else
+            sql = "UPDATE `klient` SET `nazwisko` = '" + nazwisko + "', `imie` = '" + imie + "', `nazwa_firmy` = '" +
+                    nazwa_firmy + "', `miasto` = '" + miasto + "', `ulica_nr_domu` = '" + ulica_nr_domu + "' WHERE `klient`.`id_klienta` = " + id;
         statement.executeUpdate(sql);
     }
 
-    public void add(int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Date data_zwolnienia, Float wynagrodzenie) throws SQLException   {
-        String sql = "INSERT INTO `pracownik` VALUES (NULL, '" + id_stanowiska + "', '" + nazwisko +  "', '" + imie +  "', '" + data_zatrudnienia +  "', '" + data_zwolnienia +"', '" + wynagrodzenie +"')";
+    public void add(int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Date data_zwolnienia, Float wynagrodzenie) throws SQLException {
+        String sql = "INSERT INTO `pracownik` VALUES (NULL, '" + id_stanowiska + "', '" + nazwisko + "', '" + imie + "', '" + data_zatrudnienia + "', '" + data_zwolnienia + "', '" + wynagrodzenie + "')";
         statement.executeUpdate(sql);
     }
 
-    public void update(int id, int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Date data_zwolnienia, Float wynagrodzenie) throws SQLException   {
+    public void add(int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Float wynagrodzenie) throws SQLException {
+        String sql = "INSERT INTO `pracownik` VALUES (NULL, '" + id_stanowiska + "', '" + nazwisko + "', '" + imie + "', '" + data_zatrudnienia + "', " + "NULL" + ", '" + wynagrodzenie + "')";
+        statement.executeUpdate(sql);
+    }
+
+    public void update(int id, int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Date data_zwolnienia, Float wynagrodzenie) throws SQLException {
         String sql = "UPDATE `pracownik` SET `id_stanowiska` = '" + id_stanowiska + "', `nazwisko` = '" + nazwisko +
                 "', `imie` = '" + imie + "', `data_zatrudnienia` = '" + data_zatrudnienia + "', `data_zwolnienia` = '" + data_zwolnienia +
-                "', `wynagrodzenie` = '" + wynagrodzenie +"' WHERE `pracownik`.`id_pracownika` = " + id;
+                "', `wynagrodzenie` = '" + wynagrodzenie + "' WHERE `pracownik`.`id_pracownika` = " + id;
         statement.executeUpdate(sql);
     }
 
-    public void add(String nazwa) throws SQLException   {
+    public void update(int id, int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Float wynagrodzenie) throws SQLException {
+        String sql = "UPDATE `pracownik` SET `id_stanowiska` = '" + id_stanowiska + "', `nazwisko` = '" + nazwisko +
+                "', `imie` = '" + imie + "', `data_zatrudnienia` = '" + data_zatrudnienia + "', `data_zwolnienia` = " + "NULL" +
+                ", `wynagrodzenie` = '" + wynagrodzenie + "' WHERE `pracownik`.`id_pracownika` = " + id;
+        System.out.println(sql);
+        statement.executeUpdate(sql);
+    }
+
+    public void add(String nazwa) throws SQLException {
         String sql = "INSERT INTO `stanowisko` VALUES (NULL, '" + nazwa + "')";
         statement.executeUpdate(sql);
     }
 
-    public void update(int id, String nazwa) throws SQLException   {
-        String sql = "UPDATE `stanowisko` SET `id_stanowiska` = '" + nazwa + "' WHERE `stanowisko`.`id_stanowiska` = " + id;
+    public void update(int id, String nazwa) throws SQLException {
+        String sql = "UPDATE `stanowisko` SET `nazwa` = '" + nazwa + "' WHERE `stanowisko`.`id_stanowiska` = " + id;
         statement.executeUpdate(sql);
     }
 
-    public void add(String nazwa, float cena) throws SQLException   {
+    public void add(String nazwa, float cena) throws SQLException {
         String sql = "INSERT INTO `usluga` VALUES (NULL, '" + nazwa + "', '" + cena + "')";
         statement.executeUpdate(sql);
     }
 
-    public void update(int id, String nazwa, float cena) throws SQLException   {
-        String sql = "UPDATE `usluga` SET `nazwa` = '" + nazwa +"', `cena` = '"+ cena + "' WHERE `usluga`.`id_uslugi` = " + id;
+    public void update(int id, String nazwa, float cena) throws SQLException {
+        String sql = "UPDATE `usluga` SET `nazwa` = '" + nazwa + "', `cena` = '" + cena + "' WHERE `usluga`.`id_uslugi` = " + id;
         statement.executeUpdate(sql);
     }
 
-    public void add(int id_klienta, int id_pracownika, int id_uslugi, Date data_zamowienia, Date data_realizacji, int zrealizowano) throws SQLException   {
-        String sql = "INSERT INTO `zamowienie` VALUES (NULL, '" + id_klienta + "', '" + id_pracownika +  "', '" + id_uslugi +  "', '"
-                + data_zamowienia +  "', '" + data_realizacji +"', '" + zrealizowano +"')";
+    public void add(int id_klienta, int id_pracownika, int id_uslugi, Date data_zamowienia, Date data_realizacji, int zrealizowano) throws SQLException {
+        String sql = "INSERT INTO `zamowienie` VALUES (NULL, '" + id_klienta + "', '" + id_pracownika + "', '" + id_uslugi + "', '"
+                + data_zamowienia + "', '" + data_realizacji + "', '" + zrealizowano + "')";
         statement.executeUpdate(sql);
     }
 
