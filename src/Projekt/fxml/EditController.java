@@ -9,6 +9,7 @@ import Projekt.bazy.Usluga;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -39,7 +40,13 @@ public class EditController implements Initializable {
     }
 
     //TODO
-    //null w dacie w pracowniku
+    //przyciski del
+    //error log
+    //do maina powpierdalac
+    //dbaccess
+    //instancje controllerow
+    //cos bardzo waznego o czym zapomnialem
+
 
 
     public static EditController getInstance() {
@@ -73,10 +80,10 @@ public class EditController implements Initializable {
     @FXML
     public void klientAddInit() {
         Label nazwisko = new Label("Nazwisko");
-        Label imie = new Label("Imie");
+        Label imie = new Label("Imię");
         Label nazwa_firmy = new Label("Nazwa firmy");
         Label miasto = new Label("Miasto");
-        Label ul_nr_domu = new Label("Ulica || nr domu");
+        Label ul_nr_domu = new Label("Ulica, nr domu");
 
         TextField nazwisko_control = new TextField();
         TextField imie_control = new TextField();
@@ -114,10 +121,10 @@ public class EditController implements Initializable {
 
 
         Label nazwisko = new Label("Nazwisko");
-        Label imie = new Label("Imie");
+        Label imie = new Label("Imię");
         Label nazwa_firmy = new Label("Nazwa firmy");
         Label miasto = new Label("Miasto");
-        Label ul_nr_domu = new Label("Ulica || nr domu");
+        Label ul_nr_domu = new Label("Ulica, nr domu");
 
         TextField nazwisko_control = new TextField();
         TextField imie_control = new TextField();
@@ -173,7 +180,7 @@ public class EditController implements Initializable {
 
         Label id_stanowiska = new Label("ID Stanowiska");
         Label nazwisko = new Label("Nazwisko");
-        Label imie = new Label("Imie");
+        Label imie = new Label("Imię");
         Label data_zatrudnienia = new Label("Data zatrudnienia");
         Label data_zwolnienia = new Label("Data zwolnienia");
         Label wynagrodzenie = new Label("Wynagrodzenie");
@@ -185,7 +192,14 @@ public class EditController implements Initializable {
         data_zatr_control.setEditable(false);
         DatePicker data_zwol_control = new DatePicker();
         data_zwol_control.setEditable(false);
+        data_zwol_control.setMaxWidth(245);
         TextField wynagrodzenie_control = new TextField();
+
+        Button clear_control = new Button("虚");
+        clear_control.setOnAction(
+                e -> data_zwol_control.setValue(null));
+        GridPane.setMargin(clear_control, new Insets(0, 0, 0, 242));
+        grid_pane.add(clear_control, 1, 4);
 
 
         grid_pane.add(id_stanowiska, 0, 0);
@@ -241,7 +255,7 @@ public class EditController implements Initializable {
 
         Label id_stanowiska = new Label("ID Stanowiska");
         Label nazwisko = new Label("Nazwisko");
-        Label imie = new Label("Imie");
+        Label imie = new Label("Imię");
         Label data_zatrudnienia = new Label("Data zatrudnienia");
         Label data_zwolnienia = new Label("Data zwolnienia");
         Label wynagrodzenie = new Label("Wynagrodzenie");
@@ -252,7 +266,15 @@ public class EditController implements Initializable {
         data_zatr_control.setEditable(false);
         DatePicker data_zwol_control = new DatePicker();
         data_zwol_control.setEditable(false);
+        data_zwol_control.setMaxWidth(245);
         TextField wynagrodzenie_control = new TextField();
+
+        Button clear_control = new Button("虚");
+        clear_control.setOnAction(
+                e -> data_zwol_control.setValue(null));
+        GridPane.setMargin(clear_control, new Insets(0, 0, 0, 242));
+        grid_pane.add(clear_control, 1, 4);
+
 
         nazwisko_control.setText(nazwisko_t);
         imie_control.setText(imie_t);
@@ -295,7 +317,7 @@ public class EditController implements Initializable {
 
     @FXML
     public void stanowiskoAddInit() {
-        Label nazwa = new Label("Nazwa");
+        Label nazwa = new Label("Nazwa stanowiska");
         TextField nazwa_text = new TextField();
 
         grid_pane.add(nazwa, 0, 0);
@@ -316,7 +338,7 @@ public class EditController implements Initializable {
 
     @FXML
     public void stanowiskoEditInit(int id, String nazwa_t) {
-        Label nazwa = new Label("Nazwa");
+        Label nazwa = new Label("Nazwa stanowiska");
         TextField nazwa_text = new TextField();
         nazwa_text.setText(nazwa_t);
         grid_pane.add(nazwa, 0, 0);
@@ -336,7 +358,7 @@ public class EditController implements Initializable {
 
     @FXML
     public void uslugaAddInit() {
-        Label nazwa = new Label("Nazwa");
+        Label nazwa = new Label("Nazwa usługi");
         Label cena = new Label("Cena");
 
         TextField nazwa_text = new TextField();
@@ -361,7 +383,7 @@ public class EditController implements Initializable {
 
     @FXML
     public void uslugaEditInit(int id, String nazwa_t, float cena_t) {
-        Label nazwa = new Label("Nazwa");
+        Label nazwa = new Label("Nazwa usługi");
         Label cena = new Label("Cena");
         TextField nazwa_text = new TextField();
         TextField cena_text = new TextField();
@@ -469,6 +491,7 @@ public class EditController implements Initializable {
         ObservableList<Klient> l_klientow = Main.test.loadKlient();
         ObservableList<Pracownik> l_pracownikow = Main.test.loadPracownik();
         ObservableList<Usluga> l_uslug = Main.test.loadUsluga();
+
         MenuButton menu_klient = new MenuButton();
         MenuButton menu_pracownik = new MenuButton();
         MenuButton menu_usluga = new MenuButton();

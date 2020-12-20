@@ -1,5 +1,6 @@
 package Projekt.bazy;
 
+import Projekt.Main;
 import Projekt.fxml.EditController;
 import Projekt.fxml.RootController;
 import javafx.scene.control.Button;
@@ -7,6 +8,7 @@ import javafx.scene.control.Button;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class Pracownik {
     int id_pracownika;
@@ -17,6 +19,7 @@ public class Pracownik {
     Date data_zwolnienia;
     Float wynagrodzenie;
     private Button edit;
+    private Button delete;
 
     public Pracownik(int id_pracownika, int id_stanowiska, String nazwisko, String imie, Date data_zatrudnienia, Date data_zwolnienia, Float wynagrodzenie) {
         this.id_pracownika = id_pracownika;
@@ -26,6 +29,17 @@ public class Pracownik {
         this.data_zatrudnienia = data_zatrudnienia;
         this.data_zwolnienia = data_zwolnienia;
         this.wynagrodzenie = wynagrodzenie;
+        this.delete = new Button();
+        this.delete.getStyleClass().add("remove_button");
+        this.delete.setOnAction(
+                e -> {
+                    try {
+                        Main.test.removePracownik(this.id_pracownika);
+                        RootController.getInstance().menuSetPracownicy();
+                    } catch (SQLException throwables) {
+                        RootController.getInstance().show_error(Main.getTime() + " Nie można usunąć wartości id=" + this.id_pracownika + " ponieważ jest ona połączona z inną tabelą");
+                    }
+                });
         this.edit = new Button();
         this.edit.getStyleClass().add("edit_button");
         this.edit.setOnAction(e -> {
@@ -39,6 +53,14 @@ public class Pracownik {
                 ioException.printStackTrace();
             }
         });
+    }
+
+    public Button getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Button delete) {
+        this.delete = delete;
     }
 
     public int getId_pracownika() {

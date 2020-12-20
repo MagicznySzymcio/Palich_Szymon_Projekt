@@ -1,5 +1,6 @@
 package Projekt.bazy;
 
+import Projekt.Main;
 import Projekt.fxml.EditController;
 import Projekt.fxml.RootController;
 import javafx.scene.control.Button;
@@ -26,6 +27,15 @@ public class Klient {
         this.ulica_nr_domu = ulica_nr_domu;
         this.delete = new Button();
         this.delete.getStyleClass().add("remove_button");
+        this.delete.setOnAction(
+                e -> {
+                    try {
+                        Main.test.removeKlient(this.id_klienta);
+                        RootController.getInstance().menuSetKlienci();
+                    } catch (SQLException throwables) {
+                        RootController.getInstance().show_error(Main.getTime() + " Nie można usunąć wartości id=" + this.id_klienta + " ponieważ jest ona połączona z inną tabelą");
+                    }
+                });
         this.edit = new Button();
         this.edit.getStyleClass().add("edit_button");
         this.edit.setOnAction(e -> {

@@ -19,6 +19,7 @@ public class Zamowienie {
     int zrealizowano;
     private Button delete;
     private Button edit;
+    String zrealizowano_string;
 
     public Zamowienie(int id_zamowienia, int id_klienta, int id_pracownika, int id_uslugi, Date data_zamowienia, Date data_realizacji, int zrealizowano) {
         this.id_zamowienia = id_zamowienia;
@@ -28,6 +29,7 @@ public class Zamowienie {
         this.data_zamowienia = data_zamowienia;
         this.data_realizacji = data_realizacji;
         this.zrealizowano = zrealizowano;
+        this.zrealizowano_string = this.zrealizowano == 1 ? "Jeszcze jak" : "Ojoj";
         this.delete = new Button();
         this.delete.getStyleClass().add("remove_button");
         this.delete.setOnAction(
@@ -36,7 +38,7 @@ public class Zamowienie {
                         Main.test.removeZamowienie(this.id_zamowienia);
                         RootController.getInstance().menuSetZamowienia();
                     } catch (SQLException throwables) {
-                        throwables.printStackTrace();
+                        RootController.getInstance().show_error(Main.getTime() + " Nie można usunąć wartości id=" + this.id_zamowienia + " ponieważ jest ona połączona z inną tabelą");
                     }
                 });
         this.edit = new Button();
@@ -49,6 +51,14 @@ public class Zamowienie {
                 ioException.printStackTrace();
             }
         });
+    }
+
+    public String getZrealizowano_string() {
+        return zrealizowano_string;
+    }
+
+    public void setZrealizowano_string(String zrealizowano_string) {
+        this.zrealizowano_string = zrealizowano_string;
     }
 
     public int getId_zamowienia() {

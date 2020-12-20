@@ -7,10 +7,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main extends Application {
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     public static DbAccess test;
     public static Stage STAGE;
+
+    public static String getTime() {
+        return "[" + LocalTime.now().format(FORMATTER) + "]";
+    }
 
     static {
         try {

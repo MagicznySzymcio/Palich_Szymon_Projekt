@@ -7,11 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -28,6 +27,12 @@ public class RootController implements Initializable {
     public AnchorPane alert_box;
     public Button close_button;
     public VBox vbox_tabela;
+    @FXML
+    private CheckBox checkbox_real;
+    @FXML
+    private TextArea error_log_area;
+
+
     public RootController() {
         instance = this;
     }
@@ -86,7 +91,7 @@ public class RootController implements Initializable {
     @FXML
     public void menuSetZamowienia() throws SQLException {
         menu.setText("Zamowienia");
-        TableView table = TableCreator.getTableZamowienie();
+        TableView table = TableCreator.getTableZamowienie(checkbox_real.isSelected());
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
@@ -129,5 +134,15 @@ public class RootController implements Initializable {
     public void zamowienieDialog() throws IOException, SQLException {
         openDialog();
         EditController.getInstance().zamowienieAddInit();
+    }
+
+    @FXML
+    public void checbox_real() throws SQLException {
+        if (menu.getText().equals("Zamowienia"))
+            menuSetZamowienia();
+    }
+
+    public void show_error(String msg) {
+        error_log_area.setText(msg);
     }
 }

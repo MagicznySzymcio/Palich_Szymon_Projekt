@@ -131,7 +131,6 @@ public class DbAccess {
         String sql = "UPDATE `pracownik` SET `id_stanowiska` = '" + id_stanowiska + "', `nazwisko` = '" + nazwisko +
                 "', `imie` = '" + imie + "', `data_zatrudnienia` = '" + data_zatrudnienia + "', `data_zwolnienia` = " + "NULL" +
                 ", `wynagrodzenie` = '" + wynagrodzenie + "' WHERE `pracownik`.`id_pracownika` = " + id;
-        System.out.println(sql);
         statement.executeUpdate(sql);
     }
 
@@ -165,7 +164,6 @@ public class DbAccess {
         String sql = "UPDATE `zamowienie` SET `id_klienta` = '" + id_klienta + "', `id_pracownika` = '" + id_pracownika +
                 "', `id_usługi` = '" + id_uslugi + "', `data_zamowienia` = '" + data_zamowienia + "', `data_realizacji` = '" + data_realizacji +
                 "', `zrealizowano` = '" + zrealizowano + "' WHERE `zamowienie`.`id_zamowienia` = " + id;
-        System.out.println(sql);
         statement.executeUpdate(sql);
     }
 
@@ -175,8 +173,25 @@ public class DbAccess {
         statement.executeUpdate(sql);
     }
 
+    public void removePracownik(int id) throws SQLException {
+        String sql = "DELETE FROM `pracownik` WHERE `pracownik`.`id_pracownika` = " + id;
+        statement.executeUpdate(sql);
+    }
+
+    public void removeStanowisko(int id) throws SQLException {
+        String sql = "DELETE FROM `stanowisko` WHERE `stanowisko`.`id_stanowiska` = " + id;
+        statement.executeUpdate(sql);
+    }
+
+    public void removeUsluga(int id) throws SQLException {
+        String sql = "DELETE FROM `usluga` WHERE `usluga`.`id_uslugi` = " + id;
+        statement.executeUpdate(sql);
+    }
+
     public void removeZamowienie(int id) throws SQLException {
         String sql = "DELETE FROM `zamowienie` WHERE `zamowienie`.`id_zamowienia` = " + id;
         statement.executeUpdate(sql);
     }
+
+
 }
