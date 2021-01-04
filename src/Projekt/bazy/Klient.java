@@ -33,7 +33,7 @@ public class Klient {
                         Main.test.removeKlient(this.id_klienta);
                         RootController.getInstance().menuSetKlienci();
                     } catch (SQLException throwables) {
-                        RootController.getInstance().show_error(Main.getTime() + " Nie można usunąć wartości id=" + this.id_klienta + " ponieważ jest ona połączona z inną tabelą");
+                        RootController.getInstance().show_error(Main.getTime() + " To nie powinno wyskoczyć, chyba, że nie masz połączenia z bazą danych");
                     }
                 });
         this.edit = new Button();

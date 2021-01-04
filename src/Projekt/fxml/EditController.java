@@ -46,6 +46,7 @@ public class EditController implements Initializable {
     //dbaccess
     //instancje controllerow
     //cos bardzo waznego o czym zapomnialem
+    //przeniesc metode bledowa do maina
 
 
 

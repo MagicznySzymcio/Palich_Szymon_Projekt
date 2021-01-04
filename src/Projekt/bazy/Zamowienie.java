@@ -38,7 +38,7 @@ public class Zamowienie {
                         Main.test.removeZamowienie(this.id_zamowienia);
                         RootController.getInstance().menuSetZamowienia();
                     } catch (SQLException throwables) {
-                        RootController.getInstance().show_error(Main.getTime() + " Nie można usunąć wartości id=" + this.id_zamowienia + " ponieważ jest ona połączona z inną tabelą");
+                        RootController.getInstance().show_error(Main.getTime() + " To nie powinno wyskoczyć, chyba, że nie masz połączenia z bazą danych");
                     }
                 });
         this.edit = new Button();
