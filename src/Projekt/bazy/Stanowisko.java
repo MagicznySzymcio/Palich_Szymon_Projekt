@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Stanowisko {
-    int id_stanowiska;
-    String nazwa;
+    private int id_stanowiska;
+    private String nazwa;
     private Button edit;
     private Button delete;
 
@@ -22,7 +22,7 @@ public class Stanowisko {
         this.delete.setOnAction(
                 e -> {
                     try {
-                        Main.test.removeStanowisko(this.id_stanowiska);
+                        Main.DbInstance.removeStanowisko(this.id_stanowiska);
                         RootController.getInstance().menuSetStanowiska();
                     } catch (SQLException throwables) {
                         RootController.getInstance().show_error(Main.getTime() + " Nie można usunąć wartości id=" + this.id_stanowiska + " ponieważ jest ona połączona z inną tabelą");
@@ -33,10 +33,10 @@ public class Stanowisko {
         this.edit.setOnAction(e -> {
             try {
                 RootController.getInstance().openDialog();
+                EditController.getInstance().stanowiskoEditInit(this.id_stanowiska, this.nazwa);
             } catch (IOException ioException) {
-                ioException.printStackTrace();
+                RootController.getInstance().show_error(Main.getTime() + " To nie powinno wyskoczyć, chyba, że nie masz połączenia z bazą danych");
             }
-            EditController.getInstance().stanowiskoEditInit(this.id_stanowiska, this.nazwa);
         });
     }
 
@@ -70,14 +70,6 @@ public class Stanowisko {
 
     public void setEdit(Button edit) {
         this.edit = edit;
-    }
-
-    @Override
-    public String toString() {
-        return "Stanowisko{" +
-                "id_stanowiska=" + id_stanowiska +
-                ", nazwa='" + nazwa + '\'' +
-                '}';
     }
 }
 

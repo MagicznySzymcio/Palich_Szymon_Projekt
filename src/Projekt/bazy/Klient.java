@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Klient {
-    int id_klienta;
-    String nazwisko;
-    String imie;
-    String nazwa_firmy;
-    String miasto;
-    String ulica_nr_domu;
+    private int id_klienta;
+    private String nazwisko;
+    private String imie;
+    private String nazwa_firmy;
+    private String miasto;
+    private String ulica_nr_domu;
     private Button delete;
     private Button edit;
 
@@ -30,7 +30,7 @@ public class Klient {
         this.delete.setOnAction(
                 e -> {
                     try {
-                        Main.test.removeKlient(this.id_klienta);
+                        Main.DbInstance.removeKlient(this.id_klienta);
                         RootController.getInstance().menuSetKlienci();
                     } catch (SQLException throwables) {
                         RootController.getInstance().show_error(Main.getTime() + " To nie powinno wyskoczyć, chyba, że nie masz połączenia z bazą danych");
@@ -42,8 +42,8 @@ public class Klient {
             try {
                 RootController.getInstance().openDialog();
                 EditController.getInstance().klientEditInit(this.id_klienta, this.nazwisko, this.imie, this.nazwa_firmy, this.miasto, this.ulica_nr_domu);
-            } catch (IOException | SQLException ioException) {
-                ioException.printStackTrace();
+            } catch (IOException trowables) {
+                RootController.getInstance().show_error(Main.getTime() + " To nie powinno wyskoczyć, chyba, że nie masz połączenia z bazą danych");
             }
         });
     }
@@ -110,17 +110,5 @@ public class Klient {
 
     public void setEdit(Button edit) {
         this.edit = edit;
-    }
-
-    @Override
-    public String toString() {
-        return "Klient{" +
-                "idklienta=" + id_klienta +
-                ", nazwisko='" + nazwisko + '\'' +
-                ", imie='" + imie + '\'' +
-                ", nazwa_firmy='" + nazwa_firmy + '\'' +
-                ", miasto='" + miasto + '\'' +
-                ", ulica_nr_domu='" + ulica_nr_domu + '\'' +
-                '}';
     }
 }

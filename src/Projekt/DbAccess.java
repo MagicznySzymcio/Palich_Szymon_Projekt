@@ -3,7 +3,6 @@ package Projekt;
 import Projekt.bazy.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.*;
 
 public class DbAccess {
@@ -31,7 +30,6 @@ public class DbAccess {
         this.connection = DriverManager.getConnection(url, user, pass);
         this.statement = connection.createStatement();
     }
-
 
     public ObservableList<Klient> loadKlient() throws SQLException {
         ObservableList<Klient> lista_klientow = FXCollections.observableArrayList();
@@ -101,7 +99,10 @@ public class DbAccess {
 
     public void update(int id, String nazwisko, String imie, String nazwa_firmy, String miasto, String ulica_nr_domu) throws SQLException {
         String sql;
-        if (nazwa_firmy.equals(""))
+        if (nazwa_firmy == null) {
+            sql = "UPDATE `klient` SET `nazwisko` = '" + nazwisko + "', `imie` = '" + imie + "', `nazwa_firmy` = " +
+                    "NULL" + ", `miasto` = '" + miasto + "', `ulica_nr_domu` = '" + ulica_nr_domu + "' WHERE `klient`.`id_klienta` = " + id;
+        } else if (nazwa_firmy.equals(""))
             sql = "UPDATE `klient` SET `nazwisko` = '" + nazwisko + "', `imie` = '" + imie + "', `nazwa_firmy` = " +
                     "NULL" + ", `miasto` = '" + miasto + "', `ulica_nr_domu` = '" + ulica_nr_domu + "' WHERE `klient`.`id_klienta` = " + id;
         else

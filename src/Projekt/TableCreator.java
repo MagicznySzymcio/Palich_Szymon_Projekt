@@ -1,33 +1,19 @@
 package Projekt;
 
 import Projekt.bazy.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 import java.sql.Date;
 import java.sql.SQLException;
 
 public class TableCreator {
-    private static DbAccess db_access;
-
-    static {
-        try {
-            db_access = new DbAccess();
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
     public static javafx.scene.control.TableView<Klient> getTableKlient() throws SQLException {
         javafx.scene.control.TableView<Klient> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
-        ObservableList<Klient> data = db_access.loadKlient();
+        ObservableList<Klient> data = Main.DbInstance.loadKlient();
 
         TableColumn<Klient, Integer> id_col = new TableColumn<>("ID");
         id_col.setResizable(false);
@@ -86,7 +72,7 @@ public class TableCreator {
     public static javafx.scene.control.TableView<Pracownik> getTablePracownik() throws SQLException {
         javafx.scene.control.TableView<Pracownik> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
-        ObservableList<Pracownik> data = db_access.loadPracownik();
+        ObservableList<Pracownik> data = Main.DbInstance.loadPracownik();
 
         TableColumn<Pracownik, Integer> id_col = new TableColumn<>("ID");
         id_col.setResizable(false);
@@ -151,7 +137,7 @@ public class TableCreator {
     public static javafx.scene.control.TableView<Stanowisko> getTableStanowisko() throws SQLException {
         javafx.scene.control.TableView<Stanowisko> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
-        ObservableList<Stanowisko> data = db_access.loadStanowisko();
+        ObservableList<Stanowisko> data = Main.DbInstance.loadStanowisko();
 
         TableColumn<Stanowisko, Integer> id_col = new TableColumn<>("ID");
         id_col.setResizable(false);
@@ -186,7 +172,7 @@ public class TableCreator {
     public static javafx.scene.control.TableView<Usluga> getTableUsluga() throws SQLException {
         javafx.scene.control.TableView<Usluga> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
-        ObservableList<Usluga> data = db_access.loadUsluga();
+        ObservableList<Usluga> data = Main.DbInstance.loadUsluga();
 
         TableColumn<Usluga, Integer> id_col = new TableColumn<>("ID");
         id_col.setResizable(false);
@@ -227,7 +213,7 @@ public class TableCreator {
     public static javafx.scene.control.TableView<Zamowienie> getTableZamowienie(boolean show_all) throws SQLException {
         javafx.scene.control.TableView<Zamowienie> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
-        ObservableList<Zamowienie> data = db_access.loadZamowienie();
+        ObservableList<Zamowienie> data = Main.DbInstance.loadZamowienie();
 
         if (!show_all) {
             data.removeIf(zam -> zam.getZrealizowano() == 1);

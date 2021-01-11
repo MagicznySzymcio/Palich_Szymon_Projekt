@@ -8,16 +8,15 @@ import javafx.scene.control.Button;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class Pracownik {
-    int id_pracownika;
-    int id_stanowiska;
-    String nazwisko;
-    String imie;
-    Date data_zatrudnienia;
-    Date data_zwolnienia;
-    Float wynagrodzenie;
+    private int id_pracownika;
+    private int id_stanowiska;
+    private String nazwisko;
+    private String imie;
+    private Date data_zatrudnienia;
+    private Date data_zwolnienia;
+    private Float wynagrodzenie;
     private Button edit;
     private Button delete;
 
@@ -34,7 +33,7 @@ public class Pracownik {
         this.delete.setOnAction(
                 e -> {
                     try {
-                        Main.test.removePracownik(this.id_pracownika);
+                        Main.DbInstance.removePracownik(this.id_pracownika);
                         RootController.getInstance().menuSetPracownicy();
                     } catch (SQLException throwables) {
                         RootController.getInstance().show_error(Main.getTime() + " Nie można usunąć wartości id=" + this.id_pracownika + " ponieważ jest ona połączona z inną tabelą");
@@ -50,17 +49,9 @@ public class Pracownik {
                 else
                     EditController.getInstance().pracownikEditInit(this.id_pracownika, this.id_stanowiska, this.nazwisko, this.imie, this.data_zatrudnienia, this.data_zwolnienia, this.wynagrodzenie);
             } catch (IOException | SQLException ioException) {
-                ioException.printStackTrace();
+                RootController.getInstance().show_error(Main.getTime() + " To nie powinno wyskoczyć, chyba, że nie masz połączenia z bazą danych");
             }
         });
-    }
-
-    public Button getDelete() {
-        return delete;
-    }
-
-    public void setDelete(Button delete) {
-        this.delete = delete;
     }
 
     public int getId_pracownika() {
@@ -127,15 +118,11 @@ public class Pracownik {
         this.edit = edit;
     }
 
-    @Override
-    public String toString() {
-        return "Pracownik{" +
-                "id_pracownika=" + id_pracownika +
-                ", nazwisko='" + nazwisko + '\'' +
-                ", imie='" + imie + '\'' +
-                ", data_zatrudnienia=" + data_zatrudnienia +
-                ", data_zwolnienia=" + data_zwolnienia +
-                ", wynagrodzenie=" + wynagrodzenie +
-                '}';
+    public Button getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Button delete) {
+        this.delete = delete;
     }
 }

@@ -6,20 +6,20 @@ import Projekt.fxml.RootController;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.sql.Date;
+import java.sql.SQLException;
 
 public class Zamowienie {
-    int id_zamowienia;
-    int id_pracownika;
-    int id_klienta;
-    int id_uslugi;
-    Date data_zamowienia;
-    Date data_realizacji;
-    int zrealizowano;
+    private int id_zamowienia;
+    private int id_pracownika;
+    private int id_klienta;
+    private int id_uslugi;
+    private Date data_zamowienia;
+    private Date data_realizacji;
+    private int zrealizowano;
     private Button delete;
     private Button edit;
-    String zrealizowano_string;
+    private String zrealizowano_string;
 
     public Zamowienie(int id_zamowienia, int id_klienta, int id_pracownika, int id_uslugi, Date data_zamowienia, Date data_realizacji, int zrealizowano) {
         this.id_zamowienia = id_zamowienia;
@@ -35,7 +35,7 @@ public class Zamowienie {
         this.delete.setOnAction(
                 e -> {
                     try {
-                        Main.test.removeZamowienie(this.id_zamowienia);
+                        Main.DbInstance.removeZamowienie(this.id_zamowienia);
                         RootController.getInstance().menuSetZamowienia();
                     } catch (SQLException throwables) {
                         RootController.getInstance().show_error(Main.getTime() + " To nie powinno wyskoczyć, chyba, że nie masz połączenia z bazą danych");
@@ -47,18 +47,10 @@ public class Zamowienie {
             try {
                 RootController.getInstance().openDialog();
                 EditController.getInstance().zamowienieEditInit(this.id_zamowienia, this.id_klienta, this.id_pracownika, this.id_uslugi, this.data_zamowienia, this.data_realizacji, this.zrealizowano);
-              } catch (IOException | SQLException ioException) {
-                ioException.printStackTrace();
+            } catch (IOException | SQLException ioException) {
+                RootController.getInstance().show_error(Main.getTime() + " To nie powinno wyskoczyć, chyba, że nie masz połączenia z bazą danych");
             }
         });
-    }
-
-    public String getZrealizowano_string() {
-        return zrealizowano_string;
-    }
-
-    public void setZrealizowano_string(String zrealizowano_string) {
-        this.zrealizowano_string = zrealizowano_string;
     }
 
     public int getId_zamowienia() {
@@ -131,5 +123,13 @@ public class Zamowienie {
 
     public void setEdit(Button edit) {
         this.edit = edit;
+    }
+
+    public String getZrealizowano_string() {
+        return zrealizowano_string;
+    }
+
+    public void setZrealizowano_string(String zrealizowano_string) {
+        this.zrealizowano_string = zrealizowano_string;
     }
 }

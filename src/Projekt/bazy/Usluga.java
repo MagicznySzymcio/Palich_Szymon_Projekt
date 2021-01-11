@@ -8,11 +8,10 @@ import javafx.scene.control.Button;
 import java.io.IOException;
 import java.sql.SQLException;
 
-
 public class Usluga {
-    int id_uslugi;
-    String nazwa;
-    float cena;
+    private int id_uslugi;
+    private String nazwa;
+    private float cena;
     private Button edit;
     private Button delete;
 
@@ -25,7 +24,7 @@ public class Usluga {
         this.delete.setOnAction(
                 e -> {
                     try {
-                        Main.test.removeUsluga(this.id_uslugi);
+                        Main.DbInstance.removeUsluga(this.id_uslugi);
                         RootController.getInstance().menuSetUslugi();
                     } catch (SQLException throwables) {
                         RootController.getInstance().show_error(Main.getTime() + " Nie można usunąć wartości id=" + this.id_uslugi + " ponieważ jest ona połączona z inną tabelą");
@@ -36,27 +35,11 @@ public class Usluga {
         this.edit.setOnAction(e -> {
             try {
                 RootController.getInstance().openDialog();
+                EditController.getInstance().uslugaEditInit(this.id_uslugi, this.nazwa, this.cena);
             } catch (IOException ioException) {
-                ioException.printStackTrace();
+                RootController.getInstance().show_error(Main.getTime() + " To nie powinno wyskoczyć, chyba, że nie masz połączenia z bazą danych");
             }
-            EditController.getInstance().uslugaEditInit(this.id_uslugi, this.nazwa, this.cena);
         });
-    }
-
-    public Button getDelete() {
-        return delete;
-    }
-
-    public void setDelete(Button delete) {
-        this.delete = delete;
-    }
-
-    public Button getEdit() {
-        return edit;
-    }
-
-    public void setEdit(Button edit) {
-        this.edit = edit;
     }
 
     public int getId_uslugi() {
@@ -83,12 +66,19 @@ public class Usluga {
         this.cena = cena;
     }
 
-    @Override
-    public String toString() {
-        return "Usluga{" +
-                "id_uslugi=" + id_uslugi +
-                ", nazwa='" + nazwa + '\'' +
-                ", cena=" + cena +
-                '}';
+    public Button getEdit() {
+        return edit;
+    }
+
+    public void setEdit(Button edit) {
+        this.edit = edit;
+    }
+
+    public Button getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Button delete) {
+        this.delete = delete;
     }
 }

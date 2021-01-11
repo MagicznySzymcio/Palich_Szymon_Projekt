@@ -1,6 +1,5 @@
 package Projekt.fxml;
 
-import Projekt.DbAccess;
 import Projekt.Main;
 import Projekt.bazy.Klient;
 import Projekt.bazy.Pracownik;
@@ -11,10 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -23,50 +20,46 @@ import java.util.ResourceBundle;
 
 public class EditController implements Initializable {
     private static EditController instance;
-    public int primo = -1;
-    public int secundo = -1;
-    public int terzo = -1;
-    public RootController prev = RootController.getInstance();
-    public DbAccess tescik = new DbAccess();
-    public AnchorPane alert_box;
-    public GridPane grid_pane;
+    private final RootController root_instance = RootController.getInstance();
+    private int primo = -1;
+    private int secundo = -1;
+    private int terzo = -1;
+    @FXML
+    private GridPane grid_pane;
     @FXML
     private Button close_button;
     @FXML
     private Button accept_button;
+    @FXML
+    private TextArea error_log;
 
-    public EditController() throws SQLException, ClassNotFoundException {
+    public EditController() {
         instance = this;
     }
-
-    //TODO
-    //przyciski del
-    //error log
-    //do maina powpierdalac
-    //dbaccess
-    //instancje controllerow
-    //cos bardzo waznego o czym zapomnialem
-    //przeniesc metode bledowa do maina
-
-
 
     public static EditController getInstance() {
         return instance;
     }
 
-    public static boolean checkString(String text) {
+    public void show_error(String msg) {
+        error_log.setText(Main.getTime() + " " + msg);
+    }
+
+    private static boolean checkString(String text) {
         return (text.length() <= 20 && text.length() >= 1);
     }
 
-    public static boolean checkStringNull(String text) {
+    private static boolean checkStringNull(String text) {
+        if (text == null)
+            return true;
         return (text.length() <= 20);
     }
 
-    public static boolean checkDate(LocalDate date) {
+    private static boolean checkDate(LocalDate date) {
         return date != null;
     }
 
-    public static boolean checkFloat(String text) {
+    private static boolean checkFloat(String text) {
         try {
             Float.parseFloat(text);
             return true;
@@ -76,7 +69,8 @@ public class EditController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}
+    public void initialize(URL url, ResourceBundle rb) {
+    }
 
     @FXML
     public void klientAddInit() {
@@ -108,19 +102,31 @@ public class EditController implements Initializable {
             try {
                 if (checkString(nazwisko_control.getText()) && checkString(imie_control.getText()) &&
                         checkStringNull(nazwa_firmy_control.getText()) && checkString(miasto_control.getText()) && checkString(ul_nr_domu_control.getText())) {
-                    tescik.add(nazwisko_control.getText(), imie_control.getText(), nazwa_firmy_control.getText(), miasto_control.getText(), ul_nr_domu_control.getText());
-                    prev.menuSetKlienci();
+                    Main.DbInstance.add(nazwisko_control.getText(), imie_control.getText(), nazwa_firmy_control.getText(), miasto_control.getText(), ul_nr_domu_control.getText());
+                    root_instance.menuSetKlienci();
                     close();
-                } else System.out.println("blad");
+                } else {
+                    if (!checkString(nazwisko_control.getText()))
+                        show_error("Nazwisko musi mieć od 1 do 20 znaków");
+                    else if (!checkString(imie_control.getText()))
+                        show_error("Imię musi mieć od 1 do 20 znaków");
+                    else if (!checkStringNull(nazwa_firmy_control.getText()))
+                        show_error("Nazwa firmy musi mieć od 1 do 20 znaków");
+                    else if (!checkString(miasto_control.getText()))
+                        show_error("Miasto musi mieć od 1 do 20 znaków");
+                    else if (!checkString(ul_nr_domu_control.getText()))
+                        show_error("Ul i numer domu musi mieć od 1 do 20 znaków");
+                    else
+                        show_error("Easter egg");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        });    }
+        });
+    }
 
     @FXML
-    public void klientEditInit(int id, String nazwisko_t, String imie_t, String nazwa_firmy_t, String miasto_t, String ulica_nr_domu_t) throws SQLException {
-
-
+    public void klientEditInit(int id, String nazwisko_t, String imie_t, String nazwa_firmy_t, String miasto_t, String ulica_nr_domu_t) {
         Label nazwisko = new Label("Nazwisko");
         Label imie = new Label("Imię");
         Label nazwa_firmy = new Label("Nazwa firmy");
@@ -156,19 +162,33 @@ public class EditController implements Initializable {
             try {
                 if (checkString(nazwisko_control.getText()) && checkString(imie_control.getText()) &&
                         checkStringNull(nazwa_firmy_control.getText()) && checkString(miasto_control.getText()) && checkString(ul_nr_domu_control.getText())) {
-                    tescik.update(id, nazwisko_control.getText(), imie_control.getText(), nazwa_firmy_control.getText(), miasto_control.getText(), ul_nr_domu_control.getText());
-                    prev.menuSetKlienci();
+                    Main.DbInstance.update(id, nazwisko_control.getText(), imie_control.getText(), nazwa_firmy_control.getText(), miasto_control.getText(), ul_nr_domu_control.getText());
+                    root_instance.menuSetKlienci();
                     close();
-                } else System.out.println("blad");
+                } else {
+                    if (!checkString(nazwisko_control.getText()))
+                        show_error("Nazwisko musi mieć od 1 do 20 znaków");
+                    else if (!checkString(imie_control.getText()))
+                        show_error("Imię musi mieć od 1 do 20 znaków");
+                    else if (!checkStringNull(nazwa_firmy_control.getText()))
+                        show_error("Nazwa firmy musi mieć od 1 do 20 znaków");
+                    else if (!checkString(miasto_control.getText()))
+                        show_error("Miasto musi mieć od 1 do 20 znaków");
+                    else if (!checkString(ul_nr_domu_control.getText()))
+                        show_error("Ul i numer domu musi mieć od 1 do 20 znaków");
+                    else
+                        show_error("Easter egg");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        });    }
+        });
+    }
 
     @FXML
     public void pracownikAddInit() throws SQLException {
         MenuButton id_stan_menu = new MenuButton("Wybierz ID");
-        ObservableList<Stanowisko> table = Main.test.loadStanowisko();
+        ObservableList<Stanowisko> table = Main.DbInstance.loadStanowisko();
         for (Stanowisko stanowisko : table) {
             MenuItem temp = new MenuItem(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
             temp.setOnAction(e -> {
@@ -221,23 +241,35 @@ public class EditController implements Initializable {
                 if (checkString(nazwisko_control.getText()) && checkString(imie_control.getText()) &&
                         checkFloat(wynagrodzenie_control.getText()) && primo != -1 && checkDate(data_zatr_control.getValue())) {
                     if (checkDate(data_zwol_control.getValue()))
-                        tescik.add(primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
+                        Main.DbInstance.add(primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
                                 Date.valueOf(data_zwol_control.getValue()), Float.parseFloat(wynagrodzenie_control.getText()));
                     else
-                        tescik.add(primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
+                        Main.DbInstance.add(primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
                                 Float.parseFloat(wynagrodzenie_control.getText()));
-                    prev.menuSetPracownicy();
+                    root_instance.menuSetPracownicy();
                     close();
-                } else System.out.println("blad");
+                } else {
+                    if (!checkString(nazwisko_control.getText()))
+                        show_error("Nazwisko musi mieć od 1 do 20 znaków");
+                    else if (!checkString(imie_control.getText()))
+                        show_error("Imię musi mieć od 1 do 20 znaków");
+                    else if (!checkFloat(wynagrodzenie_control.getText()))
+                        show_error("Wynagrodzenie musi być liczbą zmiennoprzecinkową (Użyj kropki)");
+                    else if (!checkDate(data_zatr_control.getValue()))
+                        show_error("Data zatrudnienia jest wymagana");
+                    else
+                        show_error("Wybierz pracownika");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        });    }
+        });
+    }
 
     @FXML
     public void pracownikEditInit(int id, int id_stanowiska_t, String nazwisko_t, String imie_t, Date data_zatrudnienia_t, Date data_zwolnienia_t, Float wynagrodzenie_t) throws SQLException {
-        ObservableList<Stanowisko> l_stanowisk = Main.test.loadStanowisko();
-        MenuButton id_stan_menu = new MenuButton(id_stanowiska_t + " - " + l_stanowisk.get(id_stanowiska_t-1).getNazwa());
+        ObservableList<Stanowisko> l_stanowisk = Main.DbInstance.loadStanowisko();
+        MenuButton id_stan_menu = new MenuButton(id_stanowiska_t + " - " + l_stanowisk.get(id_stanowiska_t - 1).getNazwa());
         primo = id_stanowiska_t;
 
         for (Stanowisko stanowisko : l_stanowisk) {
@@ -303,18 +335,30 @@ public class EditController implements Initializable {
                 if (checkString(nazwisko_control.getText()) && checkString(imie_control.getText()) &&
                         checkFloat(wynagrodzenie_control.getText()) && primo != -1 && checkDate(data_zatr_control.getValue())) {
                     if (checkDate(data_zwol_control.getValue()))
-                        tescik.update(id, primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
+                        Main.DbInstance.update(id, primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
                                 Date.valueOf(data_zwol_control.getValue()), Float.parseFloat(wynagrodzenie_control.getText()));
                     else
-                        tescik.update(id, primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
+                        Main.DbInstance.update(id, primo, nazwisko_control.getText(), imie_control.getText(), Date.valueOf(data_zatr_control.getValue()),
                                 Float.parseFloat(wynagrodzenie_control.getText()));
-                    prev.menuSetPracownicy();
+                    root_instance.menuSetPracownicy();
                     close();
-                } else System.out.println("blad");
+                } else {
+                    if (!checkString(nazwisko_control.getText()))
+                        show_error("Nazwisko musi mieć od 1 do 20 znaków");
+                    else if (!checkString(imie_control.getText()))
+                        show_error("Imię musi mieć od 1 do 20 znaków");
+                    else if (!checkFloat(wynagrodzenie_control.getText()))
+                        show_error("Wynagrodzenie musi być liczbą zmiennoprzecinkową (Użyj kropki)");
+                    else if (!checkDate(data_zatr_control.getValue()))
+                        show_error("Data zatrudnienia jest wymagana");
+                    else
+                        show_error("Wybierz pracownika");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        });    }
+        });
+    }
 
     @FXML
     public void stanowiskoAddInit() {
@@ -327,10 +371,15 @@ public class EditController implements Initializable {
         accept_button.setOnAction(e -> {
             try {
                 if (checkString(nazwa_text.getText())) {
-                    tescik.add(nazwa_text.getText());
-                    prev.menuSetStanowiska();
+                    Main.DbInstance.add(nazwa_text.getText());
+                    root_instance.menuSetStanowiska();
                     close();
-                } else System.out.println("blad");
+                } else {
+                    if (!checkString(nazwa_text.getText()))
+                        show_error("Nazwa stanowiska musi mieć od 1 do 20 znaków");
+                    else
+                        show_error("Easter egg");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -347,10 +396,15 @@ public class EditController implements Initializable {
         accept_button.setOnAction(e -> {
             try {
                 if (checkString(nazwa_text.getText())) {
-                    tescik.update(id, nazwa_text.getText());
-                    prev.menuSetStanowiska();
+                    Main.DbInstance.update(id, nazwa_text.getText());
+                    root_instance.menuSetStanowiska();
                     close();
-                } else System.out.println("blad");
+                } else {
+                    if (!checkString(nazwa_text.getText()))
+                        show_error("Nazwa stanowiska musi mieć od 1 do 20 znaków");
+                    else
+                        show_error("Easter egg");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -372,10 +426,17 @@ public class EditController implements Initializable {
         accept_button.setOnAction(e -> {
             try {
                 if (checkString(nazwa_text.getText()) && checkFloat(cena_text.getText())) {
-                    tescik.add(nazwa_text.getText(), Float.parseFloat(cena_text.getText()));
-                    prev.menuSetUslugi();
+                    Main.DbInstance.add(nazwa_text.getText(), Float.parseFloat(cena_text.getText()));
+                    root_instance.menuSetUslugi();
                     close();
-                } else System.out.println("blad");
+                } else {
+                    if (!checkString(nazwa_text.getText()))
+                        show_error("Nazwa musi mieć od 1 do 20 znaków");
+                    else if (!checkFloat(cena_text.getText()))
+                        show_error("Cena musi być liczbą zmiennoprzecinkową (Użyj kropki)");
+                    else
+                        show_error("Easter egg");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -397,10 +458,17 @@ public class EditController implements Initializable {
         accept_button.setOnAction(e -> {
             try {
                 if (checkString(nazwa_text.getText()) && checkFloat(cena_text.getText())) {
-                    tescik.update(id, nazwa_text.getText(), Float.parseFloat(cena_text.getText()));
-                    prev.menuSetUslugi();
+                    Main.DbInstance.update(id, nazwa_text.getText(), Float.parseFloat(cena_text.getText()));
+                    root_instance.menuSetUslugi();
                     close();
-                } else System.out.println("blad");
+                } else {
+                    if (!checkString(nazwa_text.getText()))
+                        show_error("Nazwa musi mieć od 1 do 20 znaków");
+                    else if (!checkFloat(cena_text.getText()))
+                        show_error("Cena musi być liczbą zmiennoprzecinkową (Użyj kropki)");
+                    else
+                        show_error("Easter egg");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -409,9 +477,9 @@ public class EditController implements Initializable {
 
     @FXML
     public void zamowienieAddInit() throws SQLException {
-        ObservableList<Klient> l_klientow = Main.test.loadKlient();
-        ObservableList<Pracownik> l_pracownikow = Main.test.loadPracownik();
-        ObservableList<Usluga> l_uslug = Main.test.loadUsluga();
+        ObservableList<Klient> l_klientow = Main.DbInstance.loadKlient();
+        ObservableList<Pracownik> l_pracownikow = Main.DbInstance.loadPracownik();
+        ObservableList<Usluga> l_uslug = Main.DbInstance.loadUsluga();
 
         MenuButton menu_klient = new MenuButton("Wybierz ID klienta");
         MenuButton menu_pracownik = new MenuButton("Wybierz ID pracownika");
@@ -476,11 +544,18 @@ public class EditController implements Initializable {
         accept_button.setOnAction(e -> {
             try {
                 if (checkDate(data_real_control.getValue()) && checkDate(data_zam_control.getValue()) && primo != -1 && secundo != -1 && terzo != -1) {
-                    tescik.add(primo, secundo, terzo, Date.valueOf(data_real_control.getValue()),
+                    Main.DbInstance.add(primo, secundo, terzo, Date.valueOf(data_real_control.getValue()),
                             Date.valueOf(data_zam_control.getValue()), zrealizowano_control.isSelected() ? 1 : 0);
-                    prev.menuSetZamowienia();
+                    root_instance.menuSetZamowienia();
                     close();
-                } else System.out.println("blad");
+                } else {
+                    if (!checkDate(data_real_control.getValue()))
+                        show_error("Data realizacji jest wymagana");
+                    else if (!checkDate(data_zam_control.getValue()))
+                        show_error("Data zamówienia jest wymagana");
+                    else
+                        show_error("Uzupełnij wartości z listy rozwijanej");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -489,9 +564,9 @@ public class EditController implements Initializable {
 
     @FXML
     public void zamowienieEditInit(int id, int id_klienta_t, int id_pracownika_t, int id_uslugi_t, Date data_zamowienia_t, Date data_realizacji_t, int zrealizowano_t) throws SQLException {
-        ObservableList<Klient> l_klientow = Main.test.loadKlient();
-        ObservableList<Pracownik> l_pracownikow = Main.test.loadPracownik();
-        ObservableList<Usluga> l_uslug = Main.test.loadUsluga();
+        ObservableList<Klient> l_klientow = Main.DbInstance.loadKlient();
+        ObservableList<Pracownik> l_pracownikow = Main.DbInstance.loadPracownik();
+        ObservableList<Usluga> l_uslug = Main.DbInstance.loadUsluga();
 
         MenuButton menu_klient = new MenuButton();
         MenuButton menu_pracownik = new MenuButton();
@@ -579,11 +654,18 @@ public class EditController implements Initializable {
         accept_button.setOnAction(e -> {
             try {
                 if (checkDate(data_real_control.getValue()) && checkDate(data_zam_control.getValue()) && primo != -1 && secundo != -1 && terzo != -1) {
-                    tescik.update(id, primo, secundo, terzo, Date.valueOf(data_real_control.getValue()),
+                    Main.DbInstance.update(id, primo, secundo, terzo, Date.valueOf(data_real_control.getValue()),
                             Date.valueOf(data_zam_control.getValue()), zrealizowano_control.isSelected() ? 1 : 0);
-                    prev.menuSetZamowienia();
+                    root_instance.menuSetZamowienia();
                     close();
-                } else System.out.println("blad");
+                } else {
+                    if (!checkDate(data_real_control.getValue()))
+                        show_error("Data realizacji jest wymagana");
+                    else if (!checkDate(data_zam_control.getValue()))
+                        show_error("Data zamówienia jest wymagana");
+                    else
+                        show_error("Uzupełnij wartości z listy rozwijanej");
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
