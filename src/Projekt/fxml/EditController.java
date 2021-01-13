@@ -579,8 +579,9 @@ public class EditController implements Initializable {
         MenuButton menu_usluga = new MenuButton();
 
         for (Klient klient : l_klientow) {
-            if (klient.getId_klienta() == id_klienta_t)
+            if (klient.getId_klienta() == id_klienta_t) {
                 menu_klient.setText(id_klienta_t + " - " + klient.getNazwisko());
+            }
         }
 
         for (Pracownik pracownik : l_pracownikow) {

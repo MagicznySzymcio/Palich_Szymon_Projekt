@@ -10,38 +10,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 public class TableCreator {
-    private static <T> void addTooltipToColumnCells(TableColumn<Pracownik, T> column, ObservableList<Pracownik> table) {
-
-        Callback<TableColumn<Pracownik, T>, TableCell<Pracownik,T>> existingCellFactory
-                = column.getCellFactory();
-
-
-
-        column.setCellFactory(c -> {
-            TableCell<Pracownik, T> cell = existingCellFactory.call(c);
-
-            System.out.println();
-
-
-            Tooltip tooltip = new Tooltip();
-            // can use arbitrary binding here to make text depend on cell
-            // in any way you need:
-
-
-            for (int i=0; i<table.size(); i++)
-                System.out.println(column.getCellData(i));
-
-
-            tooltip.setText("aaaa");
-
-
-
-
-            cell.setTooltip(tooltip);
-            return cell;
-        });
-    }
-
 
     public static javafx.scene.control.TableView<Klient> getTableKlient() throws SQLException {
         javafx.scene.control.TableView<Klient> table = new javafx.scene.control.TableView<>();
@@ -254,9 +222,33 @@ public class TableCreator {
 
     public static javafx.scene.control.TableView<Zamowienie> getTableZamowienie(boolean show_all) throws SQLException {
         ObservableList<Zamowienie> data = Main.DbInstance.loadZamowienie();
+        ObservableList<Klient> data_klient = Main.DbInstance.loadKlient();
         ObservableList<Pracownik> data_pracownik = Main.DbInstance.loadPracownik();
-        ObservableList<Stanowisko> data_klient = Main.DbInstance.loadStanowisko();
+        ObservableList<Usluga> data_usluga = Main.DbInstance.loadUsluga();
 
+        for (Zamowienie zamowienie: data) {
+            for (Klient klient: data_klient) {
+                if (zamowienie.getId_klienta() == klient.getId_klienta()) {
+                    zamowienie.setTemp_klient(klient.getNazwisko() + " " + klient.getImie());
+                }
+            }
+        }
+
+        for (Zamowienie zamowienie: data) {
+            for (Pracownik pracownik: data_pracownik) {
+                if (zamowienie.getId_pracownika() == pracownik.getId_pracownika()) {
+                    zamowienie.setTemp_pracownik(pracownik.getNazwisko() + " " + pracownik.getImie());
+                }
+            }
+        }
+
+        for (Zamowienie zamowienie: data) {
+            for (Usluga usluga: data_usluga) {
+                if (zamowienie.getId_uslugi() == usluga.getId_uslugi()) {
+                    zamowienie.setTemp_usluga(usluga.getNazwa());
+                }
+            }
+        }
 
 
 
@@ -269,28 +261,73 @@ public class TableCreator {
 
         TableColumn<Zamowienie, Integer> id_col = new TableColumn<>("ID");
         id_col.setResizable(false);
-        id_col.setPrefWidth(135);
+        id_col.setPrefWidth(50);
         id_col.setCellValueFactory(
                 new PropertyValueFactory<>("id_zamowienia")
         );
-        TableColumn<Zamowienie, Integer> id_kl_col = new TableColumn<>("ID klienta");
+        TableColumn<Zamowienie, String> id_kl_col = new TableColumn<>("Klient");
         id_kl_col.setResizable(false);
-        id_kl_col.setPrefWidth(135);
+        id_kl_col.setPrefWidth(267);
         id_kl_col.setCellValueFactory(
-                new PropertyValueFactory<>("id_klienta")
+                new PropertyValueFactory<>("temp_klient")
         );
-        TableColumn<Zamowienie, Integer> id_prac_col = new TableColumn<>("ID pracownika");
+        id_kl_col.setCellFactory
+                (
+                        column ->
+                                new TableCell<>() {
+                                    @Override
+                                    protected void updateItem(String item, boolean empty) {
+                                        super.updateItem(item, empty);
+                                        setText(item);
+                                        for (Klient klient: data_klient) {
+                                            if ((klient.getNazwisko() + " " + klient.getImie()).equals(this.getText())) {
+                                                setTooltip(new Tooltip(klient.toString()));
+                                            }
+                                        }
+                                    }
+                                });
+        TableColumn<Zamowienie, String> id_prac_col = new TableColumn<>("Pracownik");
         id_prac_col.setResizable(false);
         id_prac_col.setPrefWidth(135);
         id_prac_col.setCellValueFactory(
-                new PropertyValueFactory<>("id_pracownika")
+                new PropertyValueFactory<>("temp_pracownik")
         );
-        TableColumn<Zamowienie, Integer> id_usl_col = new TableColumn<>("ID usługi");
+        id_prac_col.setCellFactory
+                (
+                        column ->
+                                new TableCell<>() {
+                                    @Override
+                                    protected void updateItem(String item, boolean empty) {
+                                        super.updateItem(item, empty);
+                                        setText(item);
+                                        for (Pracownik pracownik: data_pracownik) {
+                                            if ((pracownik.getNazwisko() + " " + pracownik.getImie()).equals(this.getText())) {
+                                                setTooltip(new Tooltip(pracownik.toString()));
+                                            }
+                                        }
+                                    }
+                                });
+        TableColumn<Zamowienie, String> id_usl_col = new TableColumn<>("Usługa");
         id_usl_col.setResizable(false);
         id_usl_col.setPrefWidth(136);
         id_usl_col.setCellValueFactory(
-                new PropertyValueFactory<>("id_uslugi")
+                new PropertyValueFactory<>("temp_usluga")
         );
+        id_usl_col.setCellFactory
+                (
+                        column ->
+                                new TableCell<>() {
+                                    @Override
+                                    protected void updateItem(String item, boolean empty) {
+                                        super.updateItem(item, empty);
+                                        setText(item);
+                                        for (Usluga usluga: data_usluga) {
+                                            if (usluga.getNazwa().equals(this.getText())) {
+                                                setTooltip(new Tooltip(usluga.toString()));
+                                            }
+                                        }
+                                    }
+                                });
         TableColumn<Zamowienie, Date> data_zam_col = new TableColumn<>("Data zamówienia");
         data_zam_col.setResizable(false);
         data_zam_col.setPrefWidth(136);
@@ -305,7 +342,7 @@ public class TableCreator {
         );
         TableColumn<Zamowienie, String> real_col = new TableColumn<>("Zrealizowano");
         real_col.setResizable(false);
-        real_col.setPrefWidth(137);
+        real_col.setPrefWidth(90);
         real_col.setCellValueFactory(
                 new PropertyValueFactory<>("zrealizowano_string")
         );

@@ -59,6 +59,31 @@ public class Zamowienie {
         });
     }
 
+
+    public String getTemp_klient() {
+        return temp_klient;
+    }
+
+    public void setTemp_klient(String temp_klient) {
+        this.temp_klient = temp_klient;
+    }
+
+    public String getTemp_pracownik() {
+        return temp_pracownik;
+    }
+
+    public void setTemp_pracownik(String temp_pracownik) {
+        this.temp_pracownik = temp_pracownik;
+    }
+
+    public String getTemp_usluga() {
+        return temp_usluga;
+    }
+
+    public void setTemp_usluga(String temp_usluga) {
+        this.temp_usluga = temp_usluga;
+    }
+
     public int getId_zamowienia() {
         return id_zamowienia;
     }

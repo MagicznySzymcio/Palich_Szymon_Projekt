@@ -135,4 +135,21 @@ public class Pracownik {
     public void setDelete(Button delete) {
         this.delete = delete;
     }
+
+    @Override
+    public String toString() {
+        return (this.data_zwolnienia != null) ?
+                "ID: " + id_pracownika +
+                        "\n Nazwisko: " + nazwisko +
+                        "\n Imię: " + imie +
+                        "\n Data zatrudnienia: " + data_zatrudnienia +
+                        "\n Data zwolnienia: " + data_zwolnienia +
+                        "\n Wynagrodzenie: " + wynagrodzenie
+                :
+                "ID: " + id_pracownika +
+                        "\n Nazwisko: " + nazwisko +
+                        "\n Imię: " + imie +
+                        "\n Data zatrudnienia: " + data_zatrudnienia +
+                        "\n Wynagrodzenie: " + wynagrodzenie;
+    }
 }

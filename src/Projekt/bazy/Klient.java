@@ -111,4 +111,21 @@ public class Klient {
     public void setEdit(Button edit) {
         this.edit = edit;
     }
+
+    @Override
+    public String toString() {
+        return (this.nazwa_firmy != null) ?
+          "ID: " + id_klienta +
+                "\n Nazwisko: " + nazwisko +
+                "\n Imię: " + imie +
+                "\n Nazwa Firmy: " + nazwa_firmy +
+                "\n Miasto: " + miasto +
+                "\n Ulica i nr domu: " + ulica_nr_domu
+                :
+                "ID: " + id_klienta +
+                "\n Nazwisko: " + nazwisko +
+                "\n Imię: " + imie +
+                "\n Miasto: " + miasto +
+                "\n Ulica i nr domu: " + ulica_nr_domu;
+    }
 }

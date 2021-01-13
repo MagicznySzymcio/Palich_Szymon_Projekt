@@ -81,4 +81,11 @@ public class Usluga {
     public void setDelete(Button delete) {
         this.delete = delete;
     }
+
+    @Override
+    public String toString() {
+        return "ID: " + id_uslugi +
+                "\n Nazwa usługi: " + nazwa +
+                "\n Cena: " + cena;
+    }
 }
