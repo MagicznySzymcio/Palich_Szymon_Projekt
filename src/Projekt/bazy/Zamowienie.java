@@ -17,6 +17,9 @@ public class Zamowienie {
     private Date data_zamowienia;
     private Date data_realizacji;
     private int zrealizowano;
+    private String temp_klient;
+    private String temp_pracownik;
+    private String temp_usluga;
     private Button delete;
     private Button edit;
     private String zrealizowano_string;
@@ -28,8 +31,11 @@ public class Zamowienie {
         this.id_uslugi = id_uslugi;
         this.data_zamowienia = data_zamowienia;
         this.data_realizacji = data_realizacji;
+        String temp_klient = null;
+        String temp_pracownik = null;
+        String temp_usluga = null;
         this.zrealizowano = zrealizowano;
-        this.zrealizowano_string = this.zrealizowano == 1 ? "Jeszcze jak" : "Ojoj";
+        this.zrealizowano_string = this.zrealizowano == 1 ? "TAK" : "NIE";
         this.delete = new Button();
         this.delete.getStyleClass().add("remove_button");
         this.delete.setOnAction(

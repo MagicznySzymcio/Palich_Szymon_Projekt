@@ -2,14 +2,47 @@ package Projekt;
 
 import Projekt.bazy.*;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.sql.Date;
 import java.sql.SQLException;
 
 public class TableCreator {
+    private static <T> void addTooltipToColumnCells(TableColumn<Pracownik, T> column, ObservableList<Pracownik> table) {
+
+        Callback<TableColumn<Pracownik, T>, TableCell<Pracownik,T>> existingCellFactory
+                = column.getCellFactory();
+
+
+
+        column.setCellFactory(c -> {
+            TableCell<Pracownik, T> cell = existingCellFactory.call(c);
+
+            System.out.println();
+
+
+            Tooltip tooltip = new Tooltip();
+            // can use arbitrary binding here to make text depend on cell
+            // in any way you need:
+
+
+            for (int i=0; i<table.size(); i++)
+                System.out.println(column.getCellData(i));
+
+
+            tooltip.setText("aaaa");
+
+
+
+
+            cell.setTooltip(tooltip);
+            return cell;
+        });
+    }
+
+
     public static javafx.scene.control.TableView<Klient> getTableKlient() throws SQLException {
         javafx.scene.control.TableView<Klient> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
@@ -70,9 +103,17 @@ public class TableCreator {
     }
 
     public static javafx.scene.control.TableView<Pracownik> getTablePracownik() throws SQLException {
+        ObservableList<Pracownik> data = Main.DbInstance.loadPracownik();
+        ObservableList<Stanowisko> data2 = Main.DbInstance.loadStanowisko();
+        for (Pracownik pracownik: data) {
+            for (Stanowisko stanowisko: data2) {
+                if (pracownik.getId_stanowiska() == stanowisko.getId_stanowiska()) {
+                    pracownik.setTemp_stanowisko(stanowisko.getNazwa());
+                }
+            }
+        }
         javafx.scene.control.TableView<Pracownik> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
-        ObservableList<Pracownik> data = Main.DbInstance.loadPracownik();
 
         TableColumn<Pracownik, Integer> id_col = new TableColumn<>("ID");
         id_col.setResizable(false);
@@ -80,11 +121,11 @@ public class TableCreator {
         id_col.setCellValueFactory(
                 new PropertyValueFactory<>("id_pracownika")
         );
-        TableColumn<Pracownik, Integer> id_stan_col = new TableColumn<>("ID stanowiska");
+        TableColumn<Pracownik, String> id_stan_col = new TableColumn<>("Stanowisko");
         id_stan_col.setResizable(false);
         id_stan_col.setPrefWidth(100);
         id_stan_col.setCellValueFactory(
-                new PropertyValueFactory<>("id_stanowiska")
+                new PropertyValueFactory<>("temp_stanowisko")
         );
         TableColumn<Pracownik, Integer> naz_col = new TableColumn<>("Nazwisko");
         naz_col.setResizable(false);
@@ -131,6 +172,7 @@ public class TableCreator {
 
         table.setItems(data);
         table.getColumns().addAll(id_col, id_stan_col, naz_col, imie_col, data_zatr_col, data_zwol_col, wynagr_col, edit_col, del_col);
+
         return table;
     }
 
@@ -211,9 +253,15 @@ public class TableCreator {
     }
 
     public static javafx.scene.control.TableView<Zamowienie> getTableZamowienie(boolean show_all) throws SQLException {
+        ObservableList<Zamowienie> data = Main.DbInstance.loadZamowienie();
+        ObservableList<Pracownik> data_pracownik = Main.DbInstance.loadPracownik();
+        ObservableList<Stanowisko> data_klient = Main.DbInstance.loadStanowisko();
+
+
+
+
         javafx.scene.control.TableView<Zamowienie> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
-        ObservableList<Zamowienie> data = Main.DbInstance.loadZamowienie();
 
         if (!show_all) {
             data.removeIf(zam -> zam.getZrealizowano() == 1);

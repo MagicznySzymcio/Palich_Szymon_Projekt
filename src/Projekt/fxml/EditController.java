@@ -269,8 +269,13 @@ public class EditController implements Initializable {
     @FXML
     public void pracownikEditInit(int id, int id_stanowiska_t, String nazwisko_t, String imie_t, Date data_zatrudnienia_t, Date data_zwolnienia_t, Float wynagrodzenie_t) throws SQLException {
         ObservableList<Stanowisko> l_stanowisk = Main.DbInstance.loadStanowisko();
-        MenuButton id_stan_menu = new MenuButton(id_stanowiska_t + " - " + l_stanowisk.get(id_stanowiska_t - 1).getNazwa());
+        MenuButton id_stan_menu = null;
         primo = id_stanowiska_t;
+
+        for (Stanowisko stanowisko : l_stanowisk) {
+            if (stanowisko.getId_stanowiska() == id_stanowiska_t)
+                id_stan_menu = new MenuButton(id_stanowiska_t + " - " + stanowisko.getNazwa());
+        }
 
         for (Stanowisko stanowisko : l_stanowisk) {
             if (stanowisko.getId_stanowiska() == id)
@@ -279,8 +284,9 @@ public class EditController implements Initializable {
 
         for (Stanowisko stanowisko : l_stanowisk) {
             MenuItem temp = new MenuItem(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
+            MenuButton finalId_stan_menu = id_stan_menu;
             temp.setOnAction(e -> {
-                id_stan_menu.setText(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
+                finalId_stan_menu.setText(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
                 primo = stanowisko.getId_stanowiska();
             });
             id_stan_menu.getItems().add(temp);

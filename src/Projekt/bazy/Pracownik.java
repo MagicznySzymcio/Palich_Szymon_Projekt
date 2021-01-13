@@ -17,6 +17,7 @@ public class Pracownik {
     private Date data_zatrudnienia;
     private Date data_zwolnienia;
     private Float wynagrodzenie;
+    private String temp_stanowisko;
     private Button edit;
     private Button delete;
 
@@ -28,6 +29,7 @@ public class Pracownik {
         this.data_zatrudnienia = data_zatrudnienia;
         this.data_zwolnienia = data_zwolnienia;
         this.wynagrodzenie = wynagrodzenie;
+        this.temp_stanowisko = null;
         this.delete = new Button();
         this.delete.getStyleClass().add("remove_button");
         this.delete.setOnAction(
@@ -52,6 +54,14 @@ public class Pracownik {
                 RootController.getInstance().show_error(Main.getTime() + " To nie powinno wyskoczyć, chyba, że nie masz połączenia z bazą danych");
             }
         });
+    }
+
+    public String getTemp_stanowisko() {
+        return temp_stanowisko;
+    }
+
+    public void setTemp_stanowisko(String temp_stanowisko) {
+        this.temp_stanowisko = temp_stanowisko;
     }
 
     public int getId_pracownika() {
