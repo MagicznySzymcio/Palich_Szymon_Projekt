@@ -22,8 +22,6 @@ import java.util.ResourceBundle;
 public class RootController implements Initializable {
     private static RootController instance;
     @FXML
-    public Button search;
-    @FXML
     private MenuButton menu;
     @FXML
     private VBox vbox_tabela;
@@ -42,6 +40,11 @@ public class RootController implements Initializable {
         return instance;
     }
 
+    public void show_error(String msg) {
+        error_log_area.setText(msg);
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         search_text.addEventFilter(KeyEvent.ANY, keyEvent -> {
@@ -56,10 +59,6 @@ public class RootController implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-    }
-
-    public void show_error(String msg) {
-        error_log_area.setText(msg);
     }
 
     @FXML
