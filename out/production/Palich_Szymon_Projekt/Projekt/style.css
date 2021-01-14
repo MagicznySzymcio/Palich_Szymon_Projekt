@@ -5,6 +5,23 @@
     -fx-pref-width: 50px;
 }
 
+.root {
+    -fx-font-family: Consolas;
+    -fx-base: #3f474f;
+    -fx-accent: #e7eff7 ;
+    -fx-default-button: #7f878f ;
+    -fx-focus-color: #efefef;
+    -fx-faint-focus-color: #efefef22;
+    -fx-focused-text-base-color : ladder(
+            -fx-selection-bar,
+            -fx-light-text-color 45%,
+            -fx-dark-text-color 46%,
+            -fx-dark-text-color 59%,
+            -fx-mid-text-color 60%);
+    -fx-focused-mark-color : -fx-focused-text-base-color ;
+}
+
+
 .remove_button {
     -fx-graphic: url("img/remove.png");
     -fx-background-color: red;
@@ -37,14 +54,14 @@
 
 .menu_button {
     -fx-background-radius: 0;
-    -fx-background-color: white;
+    -fx-background-color: #7f878f ;
     -fx-border-color: cornflowerblue;
 }
 
 .menu-button {
     -fx-pref-width: 270px;
     -fx-background-radius: 0;
-    -fx-background-color: white;
+    -fx-background-color: #7f878f ;
     -fx-border-color: cornflowerblue;
 }
 

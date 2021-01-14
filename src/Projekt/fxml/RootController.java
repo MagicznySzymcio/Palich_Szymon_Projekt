@@ -11,6 +11,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -96,6 +97,9 @@ public class RootController implements Initializable {
     public void openDialog() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("edit.fxml"));
         Stage dialog = new Stage();
+        dialog.getIcons().add(new Image(getClass().getResourceAsStream("../img/icon.png")));
+        dialog.setTitle("Kreator");
+        dialog.setResizable(false);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(Main.STAGE);
         dialog.setScene(new Scene(root, 600, 400));

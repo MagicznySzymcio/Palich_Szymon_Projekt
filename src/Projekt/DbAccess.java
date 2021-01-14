@@ -90,7 +90,7 @@ public class DbAccess {
 
     public void add(String nazwisko, String imie, String nazwa_firmy, String miasto, String ulica_nr_domu) throws SQLException {
         String sql;
-        if (nazwa_firmy.equals(""))
+        if (!nazwa_firmy.equals(""))
             sql = "INSERT INTO `klient` VALUES (NULL, '" + nazwisko + "', '" + imie + "', '" + nazwa_firmy + "', '" + miasto + "', '" + ulica_nr_domu + "')";
         else
             sql = "INSERT INTO `klient` VALUES (NULL, '" + nazwisko + "', '" + imie + "', " + "NULL" + ", '" + miasto + "', '" + ulica_nr_domu + "')";

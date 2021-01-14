@@ -1,10 +1,12 @@
 package Projekt.fxml;
 
+import Projekt.AutoCompleteComboBoxListener;
 import Projekt.Main;
 import Projekt.bazy.Klient;
 import Projekt.bazy.Pracownik;
 import Projekt.bazy.Stanowisko;
 import Projekt.bazy.Usluga;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -187,19 +189,19 @@ public class EditController implements Initializable {
 
     @FXML
     public void pracownikAddInit() throws SQLException {
-        MenuButton id_stan_menu = new MenuButton("Wybierz ID");
+        MenuButton id_stan_menu = new MenuButton("Wybierz Stanowisko");
         ObservableList<Stanowisko> table = Main.DbInstance.loadStanowisko();
         for (Stanowisko stanowisko : table) {
-            MenuItem temp = new MenuItem(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
+            MenuItem temp = new MenuItem(stanowisko.getNazwa());
             temp.setOnAction(e -> {
-                id_stan_menu.setText(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
+                id_stan_menu.setText(stanowisko.getNazwa());
                 primo = stanowisko.getId_stanowiska();
             });
             id_stan_menu.getItems().add(temp);
         }
 
 
-        Label id_stanowiska = new Label("ID Stanowiska");
+        Label id_stanowiska = new Label("Wybierz Stanowisko");
         Label nazwisko = new Label("Nazwisko");
         Label imie = new Label("Imię");
         Label data_zatrudnienia = new Label("Data zatrudnienia");
@@ -274,25 +276,25 @@ public class EditController implements Initializable {
 
         for (Stanowisko stanowisko : l_stanowisk) {
             if (stanowisko.getId_stanowiska() == id_stanowiska_t)
-                id_stan_menu = new MenuButton(id_stanowiska_t + " - " + stanowisko.getNazwa());
+                id_stan_menu = new MenuButton(stanowisko.getNazwa());
         }
 
         for (Stanowisko stanowisko : l_stanowisk) {
             if (stanowisko.getId_stanowiska() == id)
-                id_stan_menu.setText(id_stanowiska_t + " - " + stanowisko.getNazwa());
+                id_stan_menu.setText(stanowisko.getNazwa());
         }
 
         for (Stanowisko stanowisko : l_stanowisk) {
-            MenuItem temp = new MenuItem(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
+            MenuItem temp = new MenuItem(stanowisko.getNazwa());
             MenuButton finalId_stan_menu = id_stan_menu;
             temp.setOnAction(e -> {
-                finalId_stan_menu.setText(stanowisko.getId_stanowiska() + " - " + stanowisko.getNazwa());
+                finalId_stan_menu.setText(stanowisko.getNazwa());
                 primo = stanowisko.getId_stanowiska();
             });
             id_stan_menu.getItems().add(temp);
         }
 
-        Label id_stanowiska = new Label("ID Stanowiska");
+        Label id_stanowiska = new Label("Wybierz Stanowisko");
         Label nazwisko = new Label("Nazwisko");
         Label imie = new Label("Imię");
         Label data_zatrudnienia = new Label("Data zatrudnienia");
@@ -481,47 +483,66 @@ public class EditController implements Initializable {
         });
     }
 
+    public String getKlientFromList(String Klient, ObservableList<String> lista_temp) {
+        Klient = Klient.split("\\s+")[0];
+        for (String x : lista_temp) {
+            if (Klient.equals(x))
+                return Klient;
+        }
+        return "No";
+    }
+
     @FXML
     public void zamowienieAddInit() throws SQLException {
         ObservableList<Klient> l_klientow = Main.DbInstance.loadKlient();
         ObservableList<Pracownik> l_pracownikow = Main.DbInstance.loadPracownik();
         ObservableList<Usluga> l_uslug = Main.DbInstance.loadUsluga();
 
-        MenuButton menu_klient = new MenuButton("Wybierz ID klienta");
-        MenuButton menu_pracownik = new MenuButton("Wybierz ID pracownika");
-        MenuButton menu_usluga = new MenuButton("Wybierz ID usługi");
+        MenuButton menu_klient = new MenuButton("Wybierz klienta");
+        MenuButton menu_pracownik = new MenuButton("Wybierz pracownika");
+        MenuButton menu_usluga = new MenuButton("Wybierz usługe");
+
+        ObservableList<String> lista = FXCollections.observableArrayList();
+        ObservableList<String> lista_temp = FXCollections.observableArrayList();
+
 
         for (Klient klient : l_klientow) {
-            MenuItem temp = new MenuItem(klient.getId_klienta() + " - " + klient.getNazwisko());
+            lista_temp.add(klient.getNazwisko());
+            lista.add(klient.getNazwisko() + " " + klient.getImie());
+            MenuItem temp = new MenuItem(klient.getNazwisko() + " " + klient.getImie());
             temp.setOnAction(e -> {
-                menu_klient.setText(klient.getId_klienta() + " - " + klient.getNazwisko());
+                menu_klient.setText(klient.getNazwisko() + " " + klient.getImie());
                 primo = klient.getId_klienta();
             });
             menu_klient.getItems().add(temp);
         }
 
         for (Pracownik pracownik : l_pracownikow) {
-            MenuItem temp = new MenuItem(pracownik.getId_pracownika() + " - " + pracownik.getNazwisko());
+            MenuItem temp = new MenuItem(pracownik.getNazwisko() + " " + pracownik.getImie());
             temp.setOnAction(e -> {
-                menu_pracownik.setText(pracownik.getId_pracownika() + " - " + pracownik.getNazwisko());
+                menu_pracownik.setText(pracownik.getNazwisko() + " " + pracownik.getImie());
                 secundo = pracownik.getId_pracownika();
             });
             menu_pracownik.getItems().add(temp);
         }
 
         for (Usluga usluga : l_uslug) {
-            MenuItem temp = new MenuItem(usluga.getId_uslugi() + " - " + usluga.getNazwa());
+            MenuItem temp = new MenuItem(String.valueOf(usluga.getNazwa()));
             temp.setOnAction(e -> {
-                menu_usluga.setText(usluga.getId_uslugi() + " - " + usluga.getNazwa());
+                menu_usluga.setText(String.valueOf(usluga.getNazwa()));
                 terzo = usluga.getId_uslugi();
             });
             menu_usluga.getItems().add(temp);
         }
 
+        System.out.println(getKlientFromList("Zalewska AAA", lista_temp));
+        ComboBox<String> test = new ComboBox<>(lista);
+        new AutoCompleteComboBoxListener<>(test);
 
-        Label id_klienta_label = new Label("ID Klienta");
-        Label id_pracownika_label = new Label("ID Pracownika");
-        Label id_uslugi_label = new Label("ID Usługi");
+
+        Label id_klienta_label = new Label("Klient");
+        Label id_pracownika_label = new Label("Pracownik");
+        Label id_uslugi_label = new Label("Usługa");
         Label data_zamowienia_label = new Label("Data zamówienia");
         Label data_realizacji_label = new Label("Data realizacji");
         Label zrealizowano_label = new Label("Zrealizowano");
@@ -545,6 +566,7 @@ public class EditController implements Initializable {
         grid_pane.add(data_zam_control, 1, 3);
         grid_pane.add(data_real_control, 1, 4);
         grid_pane.add(zrealizowano_control, 1, 5);
+        grid_pane.add(test, 1, 6);
 
 
         accept_button.setOnAction(e -> {
@@ -580,17 +602,17 @@ public class EditController implements Initializable {
 
         for (Klient klient : l_klientow) {
             if (klient.getId_klienta() == id_klienta_t) {
-                menu_klient.setText(id_klienta_t + " - " + klient.getNazwisko());
+                menu_klient.setText(klient.getNazwisko() + " " + klient.getImie());
             }
         }
 
         for (Pracownik pracownik : l_pracownikow) {
             if (pracownik.getId_pracownika() == id_pracownika_t)
-                menu_pracownik.setText(id_pracownika_t + " - " + pracownik.getNazwisko());
+                menu_pracownik.setText(pracownik.getNazwisko() + " " + pracownik.getImie());
         }
         for (Usluga usluga : l_uslug) {
             if (usluga.getId_uslugi() == id_uslugi_t)
-                menu_usluga.setText(id_uslugi_t + " - " + usluga.getNazwa());
+                menu_usluga.setText(usluga.getNazwa());
         }
 
 
@@ -599,36 +621,36 @@ public class EditController implements Initializable {
         terzo = id_uslugi_t;
 
         for (Klient klient : l_klientow) {
-            MenuItem temp = new MenuItem(klient.getId_klienta() + " - " + klient.getNazwisko());
+            MenuItem temp = new MenuItem(klient.getNazwisko() + " " + klient.getImie());
             temp.setOnAction(e -> {
-                menu_klient.setText(klient.getId_klienta() + " - " + klient.getNazwisko());
+                menu_klient.setText(klient.getNazwisko() + " " + klient.getImie());
                 primo = klient.getId_klienta();
             });
             menu_klient.getItems().add(temp);
         }
 
         for (Pracownik pracownik : l_pracownikow) {
-            MenuItem temp = new MenuItem(pracownik.getId_pracownika() + " - " + pracownik.getNazwisko());
+            MenuItem temp = new MenuItem(pracownik.getNazwisko() + " " + pracownik.getImie());
             temp.setOnAction(e -> {
-                menu_pracownik.setText(pracownik.getId_pracownika() + " - " + pracownik.getNazwisko());
+                menu_pracownik.setText(pracownik.getNazwisko() + " " + pracownik.getImie());
                 secundo = pracownik.getId_pracownika();
             });
             menu_pracownik.getItems().add(temp);
         }
 
         for (Usluga usluga : l_uslug) {
-            MenuItem temp = new MenuItem(usluga.getId_uslugi() + " - " + usluga.getNazwa());
+            MenuItem temp = new MenuItem(usluga.getNazwa());
             temp.setOnAction(e -> {
-                menu_usluga.setText(usluga.getId_uslugi() + " - " + usluga.getNazwa());
+                menu_usluga.setText(usluga.getNazwa());
                 terzo = usluga.getId_uslugi();
             });
             menu_usluga.getItems().add(temp);
         }
 
 
-        Label id_klienta_label = new Label("ID Klienta");
-        Label id_pracownika_label = new Label("ID Pracownika");
-        Label id_uslugi_label = new Label("ID Usługi");
+        Label id_klienta_label = new Label("Klient");
+        Label id_pracownika_label = new Label("Pracownik");
+        Label id_uslugi_label = new Label("Usługa");
         Label data_zamowienia_label = new Label("Data zamówienia");
         Label data_realizacji_label = new Label("Data realizacji");
         Label zrealizowano_label = new Label("Zrealizowano");
@@ -678,7 +700,6 @@ public class EditController implements Initializable {
             }
         });
     }
-
 
     @FXML
     public void close() {

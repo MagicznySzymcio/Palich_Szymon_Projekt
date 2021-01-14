@@ -4,7 +4,6 @@ import Projekt.bazy.*;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -16,27 +15,22 @@ public class TableCreator {
         table.setPrefHeight(700.0);
         ObservableList<Klient> data = Main.DbInstance.loadKlient();
 
-        TableColumn<Klient, Integer> id_col = new TableColumn<>("ID");
-        id_col.setResizable(false);
-        id_col.setPrefWidth(50);
-        id_col.setCellValueFactory(
-                new PropertyValueFactory<>("id_klienta")
-        );
+
         TableColumn<Klient, String> naz_col = new TableColumn<>("Nazwisko");
         naz_col.setResizable(false);
-        naz_col.setPrefWidth(400);
+        naz_col.setPrefWidth(300);
         naz_col.setCellValueFactory(
                 new PropertyValueFactory<>("nazwisko")
         );
         TableColumn<Klient, String> imie_col = new TableColumn<>("Imię");
         imie_col.setResizable(false);
-        imie_col.setPrefWidth(150);
+        imie_col.setPrefWidth(200);
         imie_col.setCellValueFactory(
                 new PropertyValueFactory<>("imie")
         );
         TableColumn<Klient, String> firma_col = new TableColumn<>("Firma");
         firma_col.setResizable(false);
-        firma_col.setPrefWidth(100);
+        firma_col.setPrefWidth(200);
         firma_col.setCellValueFactory(
                 new PropertyValueFactory<>("nazwa_firmy")
         );
@@ -66,7 +60,7 @@ public class TableCreator {
         );
 
         table.setItems(data);
-        table.getColumns().addAll(id_col, naz_col, imie_col, firma_col, miasto_col, ulica_col, edit_col, del_col);
+        table.getColumns().addAll(naz_col, imie_col, firma_col, miasto_col, ulica_col, edit_col, del_col);
         return table;
     }
 
@@ -83,15 +77,9 @@ public class TableCreator {
         javafx.scene.control.TableView<Pracownik> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
 
-        TableColumn<Pracownik, Integer> id_col = new TableColumn<>("ID");
-        id_col.setResizable(false);
-        id_col.setPrefWidth(50);
-        id_col.setCellValueFactory(
-                new PropertyValueFactory<>("id_pracownika")
-        );
         TableColumn<Pracownik, String> id_stan_col = new TableColumn<>("Stanowisko");
         id_stan_col.setResizable(false);
-        id_stan_col.setPrefWidth(100);
+        id_stan_col.setPrefWidth(150);
         id_stan_col.setCellValueFactory(
                 new PropertyValueFactory<>("temp_stanowisko")
         );
@@ -139,7 +127,7 @@ public class TableCreator {
         );
 
         table.setItems(data);
-        table.getColumns().addAll(id_col, id_stan_col, naz_col, imie_col, data_zatr_col, data_zwol_col, wynagr_col, edit_col, del_col);
+        table.getColumns().addAll(id_stan_col, naz_col, imie_col, data_zatr_col, data_zwol_col, wynagr_col, edit_col, del_col);
 
         return table;
     }
@@ -149,15 +137,9 @@ public class TableCreator {
         table.setPrefHeight(700.0);
         ObservableList<Stanowisko> data = Main.DbInstance.loadStanowisko();
 
-        TableColumn<Stanowisko, Integer> id_col = new TableColumn<>("ID");
-        id_col.setResizable(false);
-        id_col.setPrefWidth(50);
-        id_col.setCellValueFactory(
-                new PropertyValueFactory<>("id_stanowiska")
-        );
         TableColumn<Stanowisko, String> naz_col = new TableColumn<>("Nazwa stanowiska");
         naz_col.setResizable(false);
-        naz_col.setPrefWidth(900);
+        naz_col.setPrefWidth(950);
         naz_col.setCellValueFactory(
                 new PropertyValueFactory<>("nazwa")
         );
@@ -175,7 +157,7 @@ public class TableCreator {
         );
 
         table.setItems(data);
-        table.getColumns().addAll(id_col, naz_col, edit_col, del_col);
+        table.getColumns().addAll(naz_col, edit_col, del_col);
         return table;
     }
 
@@ -184,21 +166,16 @@ public class TableCreator {
         table.setPrefHeight(700.0);
         ObservableList<Usluga> data = Main.DbInstance.loadUsluga();
 
-        TableColumn<Usluga, Integer> id_col = new TableColumn<>("ID");
-        id_col.setResizable(false);
-        id_col.setPrefWidth(50);
-        id_col.setCellValueFactory(
-                new PropertyValueFactory<>("id_uslugi")
-        );
         TableColumn<Usluga, String> naz_col = new TableColumn<>("Nazwa usługi");
-        naz_col.setResizable(false);
+        naz_col.setResizable(true);
+        naz_col.setMinWidth(775);
         naz_col.setPrefWidth(800);
         naz_col.setCellValueFactory(
                 new PropertyValueFactory<>("nazwa")
         );
         TableColumn<Usluga, Float> cena_col = new TableColumn<>("Cena");
         cena_col.setResizable(false);
-        cena_col.setPrefWidth(100);
+        cena_col.setPrefWidth(150);
         cena_col.setCellValueFactory(
                 new PropertyValueFactory<>("cena")
         );
@@ -216,7 +193,7 @@ public class TableCreator {
         );
 
         table.setItems(data);
-        table.getColumns().addAll(id_col, naz_col, cena_col, edit_col, del_col);
+        table.getColumns().addAll(naz_col, cena_col, edit_col, del_col);
         return table;
     }
 
@@ -259,15 +236,9 @@ public class TableCreator {
             data.removeIf(zam -> zam.getZrealizowano() == 1);
         }
 
-        TableColumn<Zamowienie, Integer> id_col = new TableColumn<>("ID");
-        id_col.setResizable(false);
-        id_col.setPrefWidth(50);
-        id_col.setCellValueFactory(
-                new PropertyValueFactory<>("id_zamowienia")
-        );
         TableColumn<Zamowienie, String> id_kl_col = new TableColumn<>("Klient");
         id_kl_col.setResizable(false);
-        id_kl_col.setPrefWidth(267);
+        id_kl_col.setPrefWidth(292);
         id_kl_col.setCellValueFactory(
                 new PropertyValueFactory<>("temp_klient")
         );
@@ -288,7 +259,7 @@ public class TableCreator {
                                 });
         TableColumn<Zamowienie, String> id_prac_col = new TableColumn<>("Pracownik");
         id_prac_col.setResizable(false);
-        id_prac_col.setPrefWidth(135);
+        id_prac_col.setPrefWidth(185);
         id_prac_col.setCellValueFactory(
                 new PropertyValueFactory<>("temp_pracownik")
         );
@@ -309,7 +280,7 @@ public class TableCreator {
                                 });
         TableColumn<Zamowienie, String> id_usl_col = new TableColumn<>("Usługa");
         id_usl_col.setResizable(false);
-        id_usl_col.setPrefWidth(136);
+        id_usl_col.setPrefWidth(161);
         id_usl_col.setCellValueFactory(
                 new PropertyValueFactory<>("temp_usluga")
         );
@@ -330,13 +301,13 @@ public class TableCreator {
                                 });
         TableColumn<Zamowienie, Date> data_zam_col = new TableColumn<>("Data zamówienia");
         data_zam_col.setResizable(false);
-        data_zam_col.setPrefWidth(136);
+        data_zam_col.setPrefWidth(111);
         data_zam_col.setCellValueFactory(
                 new PropertyValueFactory<>("data_zamowienia")
         );
         TableColumn<Zamowienie, Date> data_real_col = new TableColumn<>("Data realizacji");
         data_real_col.setResizable(false);
-        data_real_col.setPrefWidth(136);
+        data_real_col.setPrefWidth(111);
         data_real_col.setCellValueFactory(
                 new PropertyValueFactory<>("data_realizacji")
         );
@@ -361,7 +332,7 @@ public class TableCreator {
         );
 
         table.setItems(data);
-        table.getColumns().addAll(id_col, id_kl_col, id_prac_col, id_usl_col, data_zam_col, data_real_col, real_col, edit_col, del_col);
+        table.getColumns().addAll(id_kl_col, id_prac_col, id_usl_col, data_zam_col, data_real_col, real_col, edit_col, del_col);
         return table;
     }
 }
