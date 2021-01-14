@@ -1,6 +1,6 @@
 .edit_button {
     -fx-graphic: url("img/edit.png");
-    -fx-background-color: cornflowerblue;
+    -fx-background-color: #efefef22;
     -fx-background-radius: 0;
     -fx-pref-width: 50px;
 }
@@ -24,7 +24,7 @@
 
 .remove_button {
     -fx-graphic: url("img/remove.png");
-    -fx-background-color: red;
+    -fx-background-color: #7f878f;
     -fx-background-radius: 0;
     -fx-pref-width: 50px;
 }
@@ -83,4 +83,8 @@
 
 .text-area {
     -fx-text-fill: red;
+}
+
+.combo-box {
+    -fx-pref-width: 270px;
 }

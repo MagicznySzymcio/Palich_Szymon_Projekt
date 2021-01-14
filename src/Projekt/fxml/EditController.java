@@ -483,13 +483,24 @@ public class EditController implements Initializable {
         });
     }
 
-    public String getKlientFromList(String Klient, ObservableList<String> lista_temp) {
-        Klient = Klient.split("\\s+")[0];
-        for (String x : lista_temp) {
-            if (Klient.equals(x))
-                return Klient;
+    public int getKlientFromList(String nazwisko, ObservableList<Klient> lista_temp) {
+        if (nazwisko == null) nazwisko = "none";
+        nazwisko = nazwisko.split("\\s+")[0];
+        for (Klient x : lista_temp) {
+            if (nazwisko.equals(x.getNazwisko()))
+                return x.getId_klienta();
         }
-        return "No";
+        return -1;
+    }
+
+    public int getPracownikFromList(String nazwisko, ObservableList<Pracownik> lista_temp) {
+        if (nazwisko == null) nazwisko = "none";
+        nazwisko = nazwisko.split("\\s+")[0];
+        for (Pracownik x : lista_temp) {
+            if (nazwisko.equals(x.getNazwisko()))
+                return x.getId_pracownika();
+        }
+        return -1;
     }
 
     @FXML
@@ -503,11 +514,10 @@ public class EditController implements Initializable {
         MenuButton menu_usluga = new MenuButton("Wybierz usługe");
 
         ObservableList<String> lista = FXCollections.observableArrayList();
-        ObservableList<String> lista_temp = FXCollections.observableArrayList();
+        ObservableList<String> lista_p = FXCollections.observableArrayList();
 
 
         for (Klient klient : l_klientow) {
-            lista_temp.add(klient.getNazwisko());
             lista.add(klient.getNazwisko() + " " + klient.getImie());
             MenuItem temp = new MenuItem(klient.getNazwisko() + " " + klient.getImie());
             temp.setOnAction(e -> {
@@ -518,6 +528,7 @@ public class EditController implements Initializable {
         }
 
         for (Pracownik pracownik : l_pracownikow) {
+            lista_p.add(pracownik.getNazwisko() + " " + pracownik.getImie());
             MenuItem temp = new MenuItem(pracownik.getNazwisko() + " " + pracownik.getImie());
             temp.setOnAction(e -> {
                 menu_pracownik.setText(pracownik.getNazwisko() + " " + pracownik.getImie());
@@ -535,9 +546,12 @@ public class EditController implements Initializable {
             menu_usluga.getItems().add(temp);
         }
 
-        System.out.println(getKlientFromList("Zalewska AAA", lista_temp));
-        ComboBox<String> test = new ComboBox<>(lista);
-        new AutoCompleteComboBoxListener<>(test);
+
+        ComboBox<String> combo_klienci = new ComboBox<>(lista);
+        new AutoCompleteComboBoxListener<>(combo_klienci);
+
+        ComboBox<String> combo_pracownicy = new ComboBox<>(lista_p);
+        new AutoCompleteComboBoxListener<>(combo_pracownicy);
 
 
         Label id_klienta_label = new Label("Klient");
@@ -560,19 +574,20 @@ public class EditController implements Initializable {
         grid_pane.add(data_zamowienia_label, 0, 3);
         grid_pane.add(data_realizacji_label, 0, 4);
         grid_pane.add(zrealizowano_label, 0, 5);
-        grid_pane.add(menu_klient, 1, 0);
-        grid_pane.add(menu_pracownik, 1, 1);
+        grid_pane.add(combo_klienci, 1, 0);
+        grid_pane.add(combo_pracownicy, 1, 1);
         grid_pane.add(menu_usluga, 1, 2);
         grid_pane.add(data_zam_control, 1, 3);
         grid_pane.add(data_real_control, 1, 4);
         grid_pane.add(zrealizowano_control, 1, 5);
-        grid_pane.add(test, 1, 6);
+        //grid_pane.add(combo_pracownicy, 1, 6);
 
 
         accept_button.setOnAction(e -> {
             try {
-                if (checkDate(data_real_control.getValue()) && checkDate(data_zam_control.getValue()) && primo != -1 && secundo != -1 && terzo != -1) {
-                    Main.DbInstance.add(primo, secundo, terzo, Date.valueOf(data_real_control.getValue()),
+                if (checkDate(data_real_control.getValue()) && checkDate(data_zam_control.getValue()) && getKlientFromList(combo_klienci.getValue(), l_klientow) !=-1
+                        && getPracownikFromList(combo_pracownicy.getValue(), l_pracownikow) != -1 && terzo != -1) {
+                    Main.DbInstance.add(getKlientFromList(combo_klienci.getValue(), l_klientow), getPracownikFromList(combo_pracownicy.getValue(), l_pracownikow), terzo, Date.valueOf(data_real_control.getValue()),
                             Date.valueOf(data_zam_control.getValue()), zrealizowano_control.isSelected() ? 1 : 0);
                     root_instance.menuSetZamowienia();
                     close();

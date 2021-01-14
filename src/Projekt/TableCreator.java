@@ -10,10 +10,15 @@ import java.sql.SQLException;
 
 public class TableCreator {
 
-    public static javafx.scene.control.TableView<Klient> getTableKlient() throws SQLException {
+    public static javafx.scene.control.TableView<Klient> getTableKlient(String search) throws SQLException {
         javafx.scene.control.TableView<Klient> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
         ObservableList<Klient> data = Main.DbInstance.loadKlient();
+
+        if (!search.equals("")) {
+            data.removeIf(zam -> !zam.getNazwisko().contains(search) && !zam.getImie().contains(search) &&
+                    !zam.getMiasto().contains(search) && !zam.getUlica_nr_domu().contains(search));
+        }
 
 
         TableColumn<Klient, String> naz_col = new TableColumn<>("Nazwisko");
@@ -64,7 +69,7 @@ public class TableCreator {
         return table;
     }
 
-    public static javafx.scene.control.TableView<Pracownik> getTablePracownik() throws SQLException {
+    public static javafx.scene.control.TableView<Pracownik> getTablePracownik(String search) throws SQLException {
         ObservableList<Pracownik> data = Main.DbInstance.loadPracownik();
         ObservableList<Stanowisko> data2 = Main.DbInstance.loadStanowisko();
         for (Pracownik pracownik: data) {
@@ -74,6 +79,11 @@ public class TableCreator {
                 }
             }
         }
+
+        if (!search.equals("")) {
+            data.removeIf(zam -> !zam.getImie().contains(search) && !zam.getTemp_stanowisko().contains(search) && !zam.getNazwisko().contains(search));
+        }
+
         javafx.scene.control.TableView<Pracownik> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
 
@@ -132,10 +142,13 @@ public class TableCreator {
         return table;
     }
 
-    public static javafx.scene.control.TableView<Stanowisko> getTableStanowisko() throws SQLException {
+    public static javafx.scene.control.TableView<Stanowisko> getTableStanowisko(String search) throws SQLException {
         javafx.scene.control.TableView<Stanowisko> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
         ObservableList<Stanowisko> data = Main.DbInstance.loadStanowisko();
+        if (!search.equals("")) {
+            data.removeIf(zam -> !zam.getNazwa().contains(search));
+        }
 
         TableColumn<Stanowisko, String> naz_col = new TableColumn<>("Nazwa stanowiska");
         naz_col.setResizable(false);
@@ -161,10 +174,14 @@ public class TableCreator {
         return table;
     }
 
-    public static javafx.scene.control.TableView<Usluga> getTableUsluga() throws SQLException {
+    public static javafx.scene.control.TableView<Usluga> getTableUsluga(String search) throws SQLException {
         javafx.scene.control.TableView<Usluga> table = new javafx.scene.control.TableView<>();
         table.setPrefHeight(700.0);
         ObservableList<Usluga> data = Main.DbInstance.loadUsluga();
+
+        if (!search.equals("")) {
+            data.removeIf(zam -> !zam.getNazwa().contains(search));
+        }
 
         TableColumn<Usluga, String> naz_col = new TableColumn<>("Nazwa usługi");
         naz_col.setResizable(true);
@@ -197,7 +214,7 @@ public class TableCreator {
         return table;
     }
 
-    public static javafx.scene.control.TableView<Zamowienie> getTableZamowienie(boolean show_all) throws SQLException {
+    public static javafx.scene.control.TableView<Zamowienie> getTableZamowienie(boolean show_all, String search) throws SQLException {
         ObservableList<Zamowienie> data = Main.DbInstance.loadZamowienie();
         ObservableList<Klient> data_klient = Main.DbInstance.loadKlient();
         ObservableList<Pracownik> data_pracownik = Main.DbInstance.loadPracownik();
@@ -235,6 +252,14 @@ public class TableCreator {
         if (!show_all) {
             data.removeIf(zam -> zam.getZrealizowano() == 1);
         }
+
+
+        if (!search.equals("")) {
+            data.removeIf(zam -> !zam.getTemp_klient().contains(search) && !zam.getTemp_usluga().contains(search) && !zam.getTemp_pracownik().contains(search));
+        }
+
+
+
 
         TableColumn<Zamowienie, String> id_kl_col = new TableColumn<>("Klient");
         id_kl_col.setResizable(false);
