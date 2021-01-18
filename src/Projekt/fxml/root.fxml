@@ -16,11 +16,11 @@
     <VBox fx:id="vbox_tabela" layoutX="220.0" layoutY="10.0" prefHeight="700.0" prefWidth="1050.0" />
     <MenuButton fx:id="menu" layoutX="18.0" layoutY="59.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="180.0" styleClass="menu_button" text="Klienci">
         <items>
-            <MenuItem mnemonicParsing="false" onAction="#menuSetKlienci" styleClass="menu_item" text="Klienci" />
-            <MenuItem mnemonicParsing="false" onAction="#menuSetPracownicy" styleClass="menu_item" text="Pracownicy" />
-            <MenuItem mnemonicParsing="false" onAction="#menuSetStanowiska" styleClass="menu_item" text="Stanowisko" />
-            <MenuItem mnemonicParsing="false" onAction="#menuSetUslugi" styleClass="menu_item" text="Usluga" />
-            <MenuItem mnemonicParsing="false" onAction="#menuSetZamowienia" styleClass="menu_item" text="Zamowienia" />
+            <MenuItem mnemonicParsing="false" onAction="#menuSetKliencia" styleClass="menu_item" text="Klienci" />
+            <MenuItem mnemonicParsing="false" onAction="#menuSetPracownicya" styleClass="menu_item" text="Pracownicy" />
+            <MenuItem mnemonicParsing="false" onAction="#menuSetStanowiskaa" styleClass="menu_item" text="Stanowisko" />
+            <MenuItem mnemonicParsing="false" onAction="#menuSetUslugia" styleClass="menu_item" text="Usluga" />
+            <MenuItem mnemonicParsing="false" onAction="#menuSetZamowieniaa" styleClass="menu_item" text="Zamowienia" />
         </items>
         <font>
             <Font name="Consolas" size="14.0" />

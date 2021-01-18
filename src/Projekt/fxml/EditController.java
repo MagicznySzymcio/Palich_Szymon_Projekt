@@ -580,7 +580,6 @@ public class EditController implements Initializable {
         grid_pane.add(data_zam_control, 1, 3);
         grid_pane.add(data_real_control, 1, 4);
         grid_pane.add(zrealizowano_control, 1, 5);
-        //grid_pane.add(combo_pracownicy, 1, 6);
 
 
         accept_button.setOnAction(e -> {
@@ -615,19 +614,41 @@ public class EditController implements Initializable {
         MenuButton menu_pracownik = new MenuButton();
         MenuButton menu_usluga = new MenuButton();
 
-        for (Klient klient : l_klientow) {
-            if (klient.getId_klienta() == id_klienta_t) {
-                menu_klient.setText(klient.getNazwisko() + " " + klient.getImie());
-            }
-        }
+        ObservableList<String> lista = FXCollections.observableArrayList();
+        ObservableList<String> lista_p = FXCollections.observableArrayList();
 
-        for (Pracownik pracownik : l_pracownikow) {
-            if (pracownik.getId_pracownika() == id_pracownika_t)
-                menu_pracownik.setText(pracownik.getNazwisko() + " " + pracownik.getImie());
-        }
         for (Usluga usluga : l_uslug) {
             if (usluga.getId_uslugi() == id_uslugi_t)
                 menu_usluga.setText(usluga.getNazwa());
+        }
+
+        for (Klient klient : l_klientow) {
+            lista.add(klient.getNazwisko() + " " + klient.getImie());
+            MenuItem temp = new MenuItem(klient.getNazwisko() + " " + klient.getImie());
+            temp.setOnAction(e -> {
+                menu_klient.setText(klient.getNazwisko() + " " + klient.getImie());
+                primo = klient.getId_klienta();
+            });
+            menu_klient.getItems().add(temp);
+        }
+
+        for (Pracownik pracownik : l_pracownikow) {
+            lista_p.add(pracownik.getNazwisko() + " " + pracownik.getImie());
+            MenuItem temp = new MenuItem(pracownik.getNazwisko() + " " + pracownik.getImie());
+            temp.setOnAction(e -> {
+                menu_pracownik.setText(pracownik.getNazwisko() + " " + pracownik.getImie());
+                secundo = pracownik.getId_pracownika();
+            });
+            menu_pracownik.getItems().add(temp);
+        }
+
+        for (Usluga usluga : l_uslug) {
+            MenuItem temp = new MenuItem(String.valueOf(usluga.getNazwa()));
+            temp.setOnAction(e -> {
+                menu_usluga.setText(String.valueOf(usluga.getNazwa()));
+                terzo = usluga.getId_uslugi();
+            });
+            menu_usluga.getItems().add(temp);
         }
 
 
@@ -681,14 +702,31 @@ public class EditController implements Initializable {
 
         zrealizowano_control.setSelected(zrealizowano_t == 1);
 
+        ComboBox<String> combo_klienci = new ComboBox<>(lista);
+        new AutoCompleteComboBoxListener<>(combo_klienci);
+
+        ComboBox<String> combo_pracownicy = new ComboBox<>(lista_p);
+        new AutoCompleteComboBoxListener<>(combo_pracownicy);
+
+        for (Klient klient : l_klientow) {
+            if (klient.getId_klienta() == id_klienta_t) {
+                combo_klienci.setValue(klient.getNazwisko() + " " + klient.getImie());
+            }
+        }
+
+        for (Pracownik pracownik : l_pracownikow) {
+            if (pracownik.getId_pracownika() == id_pracownika_t)
+                combo_pracownicy.setValue(pracownik.getNazwisko() + " " + pracownik.getImie());
+        }
+
         grid_pane.add(id_klienta_label, 0, 0);
         grid_pane.add(id_pracownika_label, 0, 1);
         grid_pane.add(id_uslugi_label, 0, 2);
         grid_pane.add(data_zamowienia_label, 0, 3);
         grid_pane.add(data_realizacji_label, 0, 4);
         grid_pane.add(zrealizowano_label, 0, 5);
-        grid_pane.add(menu_klient, 1, 0);
-        grid_pane.add(menu_pracownik, 1, 1);
+        grid_pane.add(combo_klienci, 1, 0);
+        grid_pane.add(combo_pracownicy, 1, 1);
         grid_pane.add(menu_usluga, 1, 2);
         grid_pane.add(data_zam_control, 1, 3);
         grid_pane.add(data_real_control, 1, 4);
@@ -697,8 +735,10 @@ public class EditController implements Initializable {
 
         accept_button.setOnAction(e -> {
             try {
-                if (checkDate(data_real_control.getValue()) && checkDate(data_zam_control.getValue()) && primo != -1 && secundo != -1 && terzo != -1) {
-                    Main.DbInstance.update(id, primo, secundo, terzo, Date.valueOf(data_real_control.getValue()),
+                if (checkDate(data_real_control.getValue()) && checkDate(data_zam_control.getValue()) && getKlientFromList(combo_klienci.getValue(), l_klientow) !=-1
+                        && getPracownikFromList(combo_pracownicy.getValue(), l_pracownikow) != -1  && terzo != -1) {
+                    Main.DbInstance.update(id, getKlientFromList(combo_klienci.getValue(), l_klientow), getPracownikFromList(combo_pracownicy.getValue(), l_pracownikow),
+                            terzo, Date.valueOf(data_real_control.getValue()),
                             Date.valueOf(data_zam_control.getValue()), zrealizowano_control.isSelected() ? 1 : 0);
                     root_instance.menuSetZamowienia();
                     close();

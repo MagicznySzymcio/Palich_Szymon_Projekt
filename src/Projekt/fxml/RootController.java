@@ -61,6 +61,7 @@ public class RootController implements Initializable {
         }
     }
 
+
     @FXML
     public void menuSetKlienci() throws SQLException {
         menu.setText("Klienci");
@@ -100,6 +101,52 @@ public class RootController implements Initializable {
         vbox_tabela.getChildren().clear();
         vbox_tabela.getChildren().addAll(table);
     }
+
+    @FXML
+    public void menuSetKliencia() throws SQLException {
+        search_text.setText("");
+        menu.setText("Klienci");
+        TableView<Projekt.bazy.Klient> table = TableCreator.getTableKlient(search_text.getText());
+        vbox_tabela.getChildren().clear();
+        vbox_tabela.getChildren().addAll(table);
+    }
+
+    @FXML
+    public void menuSetPracownicya() throws SQLException {
+        search_text.setText("");
+        menu.setText("Pracownicy");
+        TableView<Projekt.bazy.Pracownik> table = TableCreator.getTablePracownik(search_text.getText());
+        vbox_tabela.getChildren().clear();
+        vbox_tabela.getChildren().addAll(table);
+    }
+
+    @FXML
+    public void menuSetStanowiskaa() throws SQLException {
+        search_text.setText("");
+        menu.setText("Stanowiska");
+        TableView<Projekt.bazy.Stanowisko> table = TableCreator.getTableStanowisko(search_text.getText());
+        vbox_tabela.getChildren().clear();
+        vbox_tabela.getChildren().addAll(table);
+    }
+
+    @FXML
+    public void menuSetUslugia() throws SQLException {
+        search_text.setText("");
+        menu.setText("Uslugi");
+        TableView<Projekt.bazy.Usluga> table = TableCreator.getTableUsluga(search_text.getText());
+        vbox_tabela.getChildren().clear();
+        vbox_tabela.getChildren().addAll(table);
+    }
+
+    @FXML
+    public void menuSetZamowieniaa() throws SQLException {
+        search_text.setText("");
+        menu.setText("Zamowienia");
+        TableView<Projekt.bazy.Zamowienie> table = TableCreator.getTableZamowienie(checkbox_real.isSelected(), search_text.getText());
+        vbox_tabela.getChildren().clear();
+        vbox_tabela.getChildren().addAll(table);
+    }
+
 
     @FXML
     public void openDialog() throws IOException {
