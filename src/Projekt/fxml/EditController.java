@@ -738,8 +738,7 @@ public class EditController implements Initializable {
                 if (checkDate(data_real_control.getValue()) && checkDate(data_zam_control.getValue()) && getKlientFromList(combo_klienci.getValue(), l_klientow) !=-1
                         && getPracownikFromList(combo_pracownicy.getValue(), l_pracownikow) != -1  && terzo != -1) {
                     Main.DbInstance.update(id, getKlientFromList(combo_klienci.getValue(), l_klientow), getPracownikFromList(combo_pracownicy.getValue(), l_pracownikow),
-                            terzo, Date.valueOf(data_real_control.getValue()),
-                            Date.valueOf(data_zam_control.getValue()), zrealizowano_control.isSelected() ? 1 : 0);
+                            terzo, Date.valueOf(data_zam_control.getValue()), Date.valueOf(data_real_control.getValue()), zrealizowano_control.isSelected() ? 1 : 0);
                     root_instance.menuSetZamowienia();
                     close();
                 } else {
